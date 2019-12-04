@@ -1,5 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
+import NProgress from 'nprogress';
+import Router from 'next/router';
+
+// Router.events.on('routeChangeStart', console.log('handleRouteChange'))
+const nprogressStart = url => {
+    NProgress.start()
+    console.log('start')
+}
+
+Router.events.on('routeChangeStart', nprogressStart)
+
+const nprogressDone = url => {
+    NProgress.done()
+    console.log('done')
+}
+
+Router.events.on('routeChangeComplete', nprogressDone)
 
 const UndeHeader = (props) => {
 

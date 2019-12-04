@@ -3,6 +3,7 @@ import React from 'react';
 import Header from './Header';
 import styled, { createGlobalStyle} from 'styled-components';
 import UndeHeader from './UnderHeader';
+import Meta from './Meta';
 
 
 const Page = (props) => {
@@ -36,6 +37,7 @@ const Page = (props) => {
     return (
         <div>
             <GlobalStyle/>
+            <Meta/>
             <Header />
             <UndeHeader/>
             <Inner>

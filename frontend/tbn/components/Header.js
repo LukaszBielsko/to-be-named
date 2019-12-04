@@ -83,7 +83,7 @@ const Header = (props) => {
                 </div>
                 <div className="cart">
                     {/* should be an icon */}
-                    <i className="fas fa-shopping-cart"></i> 
+                    <i className="fas fa-shopping-cart"></i>
                     cart
                 </div>
             </div>
