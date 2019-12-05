@@ -2,7 +2,7 @@ import React from 'react';
 
 import Header from './Header';
 import styled, { createGlobalStyle} from 'styled-components';
-import UndeHeader from './UnderHeader';
+import UnderHeader from './UnderHeader';
 import Meta from './Meta';
 
 
@@ -18,7 +18,7 @@ const Page = (props) => {
         box-sizing: inherit;
     }
     body {
-        font-family: monospace;
+        font-family: 'Inconsolata',monospace;
         padding: 0;
         margin: 0;
         font-size: 2rem;
@@ -33,17 +33,18 @@ const Page = (props) => {
         background: lightgoldenrodyellow;
         padding: 2rem;
     `;
+    
 
     return (
         <div>
             <GlobalStyle/>
             <Meta/>
             <Header />
-            <UndeHeader/>
+            <UnderHeader/>
             <Inner>
-                {/* // what are children here?
-                // it is Component in the _app.js file 
-                // next.js magic renders whatever is clicked */}
+                {/*  what are children here?
+                 it is Component in the _app.js file 
+                 next.js magic renders whatever is clicked */}
                 {props.children}
             </Inner>
         </div>

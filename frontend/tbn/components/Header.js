@@ -1,6 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import NProgress from 'nprogress';
+import Router from 'next/router';
+
+const nprogressStart = url => {
+    NProgress.start()
+}
+
+const nprogressDone = url => {
+    NProgress.done()
+}
+
+Router.events.on('routeChangeStart', nprogressStart)
+Router.events.on('routeChangeComplete', nprogressDone)
+
 
 const Header = (props) => {
 
@@ -34,10 +48,15 @@ const Header = (props) => {
             padding-left: 50px;
             text-transform: uppercase;
             font-size: 2.5rem;
+            font-family: 'Roboto Mono';
+            font-weight: 600;
+            letter-spacing: 2px;
             a{
                 margin-left: 10px;
                 color: white;
                 text-decoration: none;
+                padding-left: 10px;
+                padding-right: 10px;
             }
         }
         .search-cart {
@@ -71,7 +90,7 @@ const Header = (props) => {
                     <a>Buy</a>
                 </Link>
                 <Link href="/account">
-                    <a>SthElse</a>
+                    <a>Test</a>
                 </Link>
                 <Link href="/test">
                     <a>Test</a>
