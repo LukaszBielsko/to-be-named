@@ -29,7 +29,7 @@ const Header = (props) => {
         .logo {
             /* flex: 1; */
             margin-right: 1rem;
-            margin-left: 1rem;
+            margin-left: 10rem;
             text-transform: uppercase;
             font-size: 3rem;
             transform: skew(-7deg);
@@ -48,8 +48,8 @@ const Header = (props) => {
             padding-left: 50px;
             text-transform: uppercase;
             font-size: 2.5rem;
-            font-family: 'Roboto Mono';
-            font-weight: 600;
+            font-family: 'Lato';
+            font-weight: 300;
             letter-spacing: 2px;
             a{
                 margin-left: 10px;
@@ -81,6 +81,7 @@ const Header = (props) => {
             align-items: flex-end;
             display: flex;
             flex-direction: row;
+            margin-right: 10rem;
             input {
                 padding-left: 10px;
                 font-size: 2rem;
@@ -103,14 +104,11 @@ const Header = (props) => {
                 <Link href="/sell">
                     <a>Sell</a>
                 </Link>
-                <Link href="/orders">
-                    <a>Buy</a>
+                <Link href="/test1">
+                    <a>Test1</a>
                 </Link>
-                <Link href="/account">
-                    <a>Test</a>
-                </Link>
-                <Link href="/test">
-                    <a>Test</a>
+                <Link href="/test2">
+                    <a>Test2</a>
                 </Link>
             </div>
             <div className="search-cart">

@@ -1,9 +1,6 @@
-import React from 'react'
-
-
 const Home = () => (
   <div>
-    <p>hello </p>
+    <p>hello from index page </p>
   </div>
 )
 
