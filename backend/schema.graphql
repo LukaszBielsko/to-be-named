@@ -1,0 +1,8 @@
+type Query {
+    getStreetArts: String
+},
+
+type Mutation {
+    createItem(title: String): String
+}
+
