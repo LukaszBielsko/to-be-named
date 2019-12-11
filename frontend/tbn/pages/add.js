@@ -1,9 +1,10 @@
 import React from 'react';
+import Add from '../components/Add';
 
 const Sell = (props) => {
-    
+
     return (
-        <p>selling stuff is good</p>
+        <Add />
     );
 };
 
