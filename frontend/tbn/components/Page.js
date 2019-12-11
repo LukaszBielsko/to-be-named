@@ -23,6 +23,8 @@ const Page = (props) => {
         margin: 0;
         font-size: 2rem;
         line-height: 1.5;
+        background: #e2e1e0;
+
     }
     `
     // inner div for centering whatever is rendered from Link

@@ -1,6 +1,7 @@
 import react, { Component } from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+import Item from '../components/Item';
 
 const GET_STREET_ARTS = gql`
    {  
