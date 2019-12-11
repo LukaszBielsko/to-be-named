@@ -3,11 +3,13 @@ type Query {
 },
 
 type Mutation {
-    createItem(title: String): String
+    createItem(title: String, place: String, description: String): String
+    delete(title: String): String
 }
 
 type Item {
     title: String
+    place: String
     description: String
 }
 

@@ -101,11 +101,11 @@ const Header = (props) => {
                 </Link>
             </div>
             <div className="nav-items">
-                <Link href="/sell">
-                    <a>Sell</a>
+                <Link href="/arts">
+                    <a>ARTs</a>
                 </Link>
-                <Link href="/test1">
-                    <a>Test1</a>
+                <Link href="/add">
+                    <a>add_art</a>
                 </Link>
                 <Link href="/test2">
                     <a>Test2</a>
