@@ -1,7 +1,7 @@
 import ApolloClient from 'apollo-boost';
 import withApollo from 'next-with-apollo';
 
-const endpoint = `http://localhost:4444`
+const endpoint = `http://localhost:4000`
 
 function createClient({headers}) { //headers for authentication 
     return new ApolloClient({

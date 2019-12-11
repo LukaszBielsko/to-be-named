@@ -1,8 +1,11 @@
-const test1  = (props) => {
+import React from 'react';
+import Items from '../components/Items';
+
+const test1 = (props) => {
     
     return (
-        <p>test 1 page</p>
+        <Items/>
     );
 };
 
-export default test1;
+export default test1;   
