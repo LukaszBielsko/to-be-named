@@ -1,0 +1,29 @@
+1. When creating new item below error was shown in console. 
+
+args { title: 'someart' }
+item { _id: 5df07b7d75af9ab902c71c06, title: 'someart' }
+TypeError: String cannot represent value: { _id: [ObjectID], title: "someart" }
+    at GraphQLScalarType.serializeString [as serialize] (/Users/lukaszwalczak/PRO/
+    .... many more lines of code here 
+Item -- someart -- was added!
+
+type Item {
+    title: String
+    description: String
+}
+
+const Mutation = {
+    createItem: (parent ,args, ctx, info) => {
+        console.log('args', args)
+        const item = new Item({title: args.title})
+        console.log('item' ,item)
+        item.save( (err,item) => {
+            if (err) return console.error('error', err)
+            console.log(`Item -- ${item.title} -- was added!`)
+        })
+        return item // i was returning OBJECT 
+    }
+}
+
+I was returning object not a string as graph was expecting. 
+What's returned inside your resolver should match the shape specified by your schema. 

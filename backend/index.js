@@ -1,4 +1,5 @@
 const createServer = require('./createServer')
+const startDB = require('./mongo/connect')
 
 const server = createServer()
 
@@ -10,3 +11,5 @@ server.start(
         },
     }, ({port}) => console.log(`Server started, listening on port ${port}.`)
 )
+
+startDB()

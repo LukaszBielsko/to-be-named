@@ -1,6 +1,8 @@
+const Item = require('../mongo/schema')
+
 const Query = {
     getStreetArts: () => {
-        return 'test test '
+        return Item.find({})
     }
 }
 

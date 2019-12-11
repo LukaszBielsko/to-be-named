@@ -1,8 +1,13 @@
 type Query {
-    getStreetArts: String
+    getStreetArts: [Item]
 },
 
 type Mutation {
     createItem(title: String): String
+}
+
+type Item {
+    title: String
+    description: String
 }
 
