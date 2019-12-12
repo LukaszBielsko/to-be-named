@@ -23,14 +23,15 @@ const Page = (props) => {
         margin: 0;
         font-size: 2rem;
         line-height: 1.5;
+        background: #ebedee;
+
     }
     `
     // inner div for centering whatever is rendered from Link
     const Inner = styled.div`
-        border: 1p solid greenyellow;
-        max-width: 80%;
+        max-width: 90%;
         margin: 0 auto;
-        background: lightgoldenrodyellow;
+        /* background: lightgoldenrodyellow; */
         padding: 2rem;
     `;
     
