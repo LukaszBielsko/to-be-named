@@ -16,12 +16,7 @@ const Card = styled.div`
     }
     .image {
         height: 70%;
-        text-align: center;
-        background: lightgrey;
-        span {
-            position: relative;
-            top: 50px;
-        }
+        width: auto;
     }
     .item-header {
         padding-left: 20px;
@@ -43,9 +38,10 @@ const Card = styled.div`
     }
 `
 
-const Item = (props) => (
-    <Card>
-        <div className="image"><span>image goes here</span> </div>
+const Item = (props) => {
+    console.log(props)
+    return <Card>
+       <img className="image" src={props.largeImage}/>
         <div className="item-header">
             <div className="item-place">{props.place}</div>
             <div className="item-title">{props.title}</div>
@@ -53,6 +49,6 @@ const Item = (props) => (
         </div>
     </Card>
 
-)
+}
 
 export default Item;

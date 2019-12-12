@@ -11,6 +11,8 @@ const GET_STREET_ARTS = gql`
             title
             description
             place
+            image
+            largeImage
         }
     }
 `
