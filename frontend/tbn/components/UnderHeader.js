@@ -6,8 +6,8 @@ const UnderHeader = (props) => {
     const UnderHeader = styled.div`
         width: 100%;
         background-color: #ebedee;
-        border-top: 2px solid white;
-        border-bottom: 2px solid white;
+        border-top: 1px solid darkgray;
+        border-bottom: 2px solid darkgray;
         display: flex;
         justify-content: space-evenly;
 

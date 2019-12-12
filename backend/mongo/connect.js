@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 
 const startDb = function () {
-    mongoose.connect('mongodb://localhost:27017/settlementHistoryDB',
+    mongoose.connect('mongodb://localhost:27017/arts_and_stuff',
         {
             useNewUrlParser: true,
             useUnifiedTopology: true

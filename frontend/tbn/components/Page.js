@@ -23,7 +23,7 @@ const Page = (props) => {
         margin: 0;
         font-size: 2rem;
         line-height: 1.5;
-        background: #e2e1e0;
+        background: #ebedee;
 
     }
     `
@@ -31,7 +31,7 @@ const Page = (props) => {
     const Inner = styled.div`
         max-width: 90%;
         margin: 0 auto;
-        background: lightgoldenrodyellow;
+        /* background: lightgoldenrodyellow; */
         padding: 2rem;
     `;
     

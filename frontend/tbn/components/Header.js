@@ -121,11 +121,11 @@ const Header = (props) => {
                 <div className="search-box">
                     <input type="text" placeholder="search" />
                 </div>
-                <div className="cart">
-                    {/* should be an icon */}
+                {/* <div className="cart">
+                    should be an icon
                     <i className="fas fa-shopping-cart"></i>
                     cart
-                </div>
+                </div> */}
             </div>
         </Navbar>
     );
