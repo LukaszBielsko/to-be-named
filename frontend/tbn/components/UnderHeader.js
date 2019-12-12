@@ -1,27 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const UndeHeader = (props) => {
+const UnderHeader = (props) => {
 
-    const UndeHeader = styled.div`
+    const UnderHeader = styled.div`
         width: 100%;
         background-color: #ebedee;
         border-top: 2px solid white;
         border-bottom: 2px solid white;
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
+
         section {
-            padding: 10px;
+            padding: 5px;
         }
         `
 
     return (
-        <UndeHeader>
+        <UnderHeader>
             <section>
                 some marketing info here 
             </section>
-        </UndeHeader>
+            <section>
+                some marketing info here
+            </section>
+            <section>
+                some marketing info here
+            </section>
+        </UnderHeader>
     );
 };
 
-export default UndeHeader;
+export default UnderHeader;

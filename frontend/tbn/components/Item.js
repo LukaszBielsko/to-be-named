@@ -17,7 +17,12 @@ const Card = styled.div`
 `
 
 const Item = (props) => (
-    <Card/>
+    <Card>
+        <p>{props.title}</p>
+        <p>{props.description}</p>
+        <p>{props.place}</p>
+    </Card>
+
 )
 
 export default Item;

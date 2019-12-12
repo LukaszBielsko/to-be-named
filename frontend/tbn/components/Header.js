@@ -108,7 +108,13 @@ const Header = (props) => {
                     <a>add_art</a>
                 </Link>
                 <Link href="/test2">
-                    <a>Test2</a>
+                    <a>articles</a>
+                </Link>
+                <Link href="/test2">
+                    <a>buy_art</a>
+                </Link>
+                <Link href="/test2">
+                    <a>misc</a>
                 </Link>
             </div>
             <div className="search-cart">
