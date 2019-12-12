@@ -1,15 +1,16 @@
 type Query {
-    getStreetArts: [Item]
-},
+  getStreetArts: [Item]
+}
 
 type Mutation {
-    createItem(title: String, place: String, description: String): String
-    delete(title: String): String
+  createItem(title: String, place: String, description: String, image: String, largeImage: String): String
+  delete(title: String): String
 }
 
 type Item {
-    title: String
-    place: String
-    description: String
+  title: String
+  place: String
+  description: String
+  image: String
+  largeImage: String
 }
-

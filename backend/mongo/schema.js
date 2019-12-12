@@ -1,12 +1,13 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema
-
+const Schema = mongoose.Schema;
 
 const pieceOfArt = new Schema({
-    title: String,
-    description: String,
-    place: String
-})
+  title: String,
+  description: String,
+  place: String,
+  image: String,
+  largeImage: String
+});
 
-module.exports = mongoose.model('pieceOfArt', pieceOfArt)
+module.exports = mongoose.model("pieceOfArt", pieceOfArt);

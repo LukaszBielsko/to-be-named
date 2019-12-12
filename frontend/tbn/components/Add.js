@@ -4,8 +4,20 @@ import { Mutation } from "react-apollo";
 import styled from "styled-components";
 
 const ADD_ITEM_MUTATION = gql`
-  mutation add_item($title: String, $place: String, $description: String) {
-    createItem(title: $title, place: $place, description: $description)
+  mutation add_item(
+    $title: String
+    $place: String
+    $description: String
+    $image: String
+    $largeImage: String
+  ) {
+    createItem(
+      title: $title
+      place: $place
+      description: $description
+      image: $image
+      largeImage: $largeImage
+    )
   }
 `;
 
@@ -59,12 +71,35 @@ class Add extends Component {
   state = {
     title: "",
     description: "",
-    place: ""
+    place: "",
+    image: "",
+    largeImage: ""
   };
 
   handleChange = evt => {
     this.setState({
       [evt.target.name]: evt.target.value
+    });
+  };
+
+  /* TODO go thrugh this function again and again  */
+
+  uploadFile = async evt => {
+    const files = evt.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "street-art");
+
+    const res = await fetch("https://api.cloudinary.com/v1_1/lukwal/upload", {
+      method: "POST",
+      body: data
+    });
+
+    const file = await res.json();
+    console.log(file);
+    this.setState({
+      image: file.secure_url,
+      largeImage: file.eager[0].secure_url
     });
   };
 
@@ -80,12 +115,25 @@ class Add extends Component {
                   variables: {
                     title: this.state.title,
                     place: this.state.place,
-                    description: this.state.description
+                    description: this.state.description,
+                    image: this.state.image,
+                    largeImage: this.state.largeImage
                   }
                 });
               }}
             >
               <fieldset>
+                <label htmlFor="file">
+                  <input
+                    name="file"
+                    type="file"
+                    required
+                    onChange={this.uploadFile}
+                  />
+                </label>
+
+                {this.state.image && <img src={this.state.image} />}
+
                 <label htmlFor="title">
                   Title
                   <input
