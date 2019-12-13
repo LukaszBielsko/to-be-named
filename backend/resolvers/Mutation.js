@@ -1,7 +1,9 @@
 const Item = require("../mongo/schema");
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 
 const Mutation = {
-  createItem: (parent, args, ctx, info) => {
+  createItem: async (parent, args, ctx, info) => {
     const item = new Item({
       title: args.title,
       place: args.place,
@@ -9,11 +11,14 @@ const Mutation = {
       image: args.image,
       largeImage: args.largeImage
     });
-    item.save((err, item) => {
+    console.log(item);
+    const saved = await item.save((err, savedItem) => {
       if (err) return console.error("error", err);
     });
-    return item.title;
+    return item;
   }
 };
 
 module.exports = Mutation;
+
+// i was not getting back a saved item but

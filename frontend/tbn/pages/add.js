@@ -1,11 +1,8 @@
-import React from 'react';
-import Add from '../components/Add';
+import React from "react";
+import CreateItem from "../components/CreateItem";
 
-const Sell = (props) => {
-
-    return (
-        <Add />
-    );
+const Sell = props => {
+  return <CreateItem />;
 };
 
 export default Sell;

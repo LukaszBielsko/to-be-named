@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import Router from "next/router";
 
 const ADD_ITEM_MUTATION = gql`
   mutation add_item(
-    $title: String
-    $place: String
-    $description: String
+    $title: String!
+    $place: String!
+    $description: String!
     $image: String
     $largeImage: String
   ) {
@@ -17,7 +18,11 @@ const ADD_ITEM_MUTATION = gql`
       description: $description
       image: $image
       largeImage: $largeImage
-    )
+    ) {
+      title
+      _id
+      place
+    }
   }
 `;
 
@@ -27,20 +32,32 @@ const Form = styled.form`
   border-radius: 3px;
   padding: 10px;
   font-size: 3rem;
+  width: 80%;
+  margin: auto;
+  text-align: center;
   label {
     display: block;
     margin-bottom: 20px;
   }
   input {
     width: 80%;
+    margin: auto;
     border: 1px solid black;
     display: block;
     font-size: 1.7rem;
     padding: 10px;
     border-radius: 3px;
   }
+  input[type="file"] {
+    width: 40%;
+    border: 0;
+  }
   fieldset {
     border: 0;
+    &[disabled] {
+      opacity: 0.5;
+    }
+    }
   }
   button {
     box-shadow: inset 0px 1px 0px 0px #ffffff;
@@ -69,9 +86,9 @@ const Form = styled.form`
 
 class Add extends Component {
   state = {
-    title: "",
-    description: "",
-    place: "",
+    title: "Yey hej",
+    description: "Juhu wiuhu",
+    place: "Austin, Texas",
     image: "",
     largeImage: ""
   };
@@ -107,11 +124,11 @@ class Add extends Component {
     return (
       <>
         <Mutation mutation={ADD_ITEM_MUTATION}>
-          {(add_item, { data, error }) => (
+          {(add_item, { loading, error }) => (
             <Form
               onSubmit={async evt => {
                 evt.preventDefault();
-                await add_item({
+                const res = await add_item({
                   variables: {
                     title: this.state.title,
                     place: this.state.place,
@@ -120,20 +137,14 @@ class Add extends Component {
                     largeImage: this.state.largeImage
                   }
                 });
+                if (error) return <p>{error.message}</p>;
+                Router.push({
+                  pathname: "/item",
+                  query: { id: res.data.createItem._id }
+                });
               }}
             >
-              <fieldset>
-                <label htmlFor="file">
-                  <input
-                    name="file"
-                    type="file"
-                    required
-                    onChange={this.uploadFile}
-                  />
-                </label>
-
-                {this.state.image && <img src={this.state.image} />}
-
+              <fieldset disabled={false}>
                 <label htmlFor="title">
                   Title
                   <input
@@ -153,7 +164,7 @@ class Add extends Component {
                     id="description"
                     name="description"
                     placeholder="Very short description please ;)"
-                    required
+                    // required
                     value={this.state.description}
                     onChange={this.handleChange}
                   />
@@ -170,6 +181,17 @@ class Add extends Component {
                     onChange={this.handleChange}
                   />
                 </label>
+
+                {/* <label htmlFor="file">
+                  <input
+                    name="file"
+                    type="file"
+                    required
+                    onChange={this.uploadFile}
+                  />
+                </label> */}
+
+                {this.state.image && <img src={this.state.image} />}
 
                 <button type="submit">Submit</button>
               </fieldset>

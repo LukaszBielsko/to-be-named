@@ -3,7 +3,13 @@ type Query {
 }
 
 type Mutation {
-  createItem(title: String, place: String, description: String, image: String, largeImage: String): String
+  createItem(
+    title: String!
+    place: String!
+    description: String!
+    image: String
+    largeImage: String
+  ): Item
   delete(title: String): String
 }
 
@@ -13,4 +19,5 @@ type Item {
   description: String
   image: String
   largeImage: String
+  _id: String
 }

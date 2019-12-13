@@ -13,6 +13,7 @@ const GET_STREET_ARTS = gql`
             place
             image
             largeImage
+            _id
         }
     }
 `
