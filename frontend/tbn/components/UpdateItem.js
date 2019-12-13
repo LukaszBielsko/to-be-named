@@ -62,20 +62,18 @@ const Form = styled.form`
   }
 `;
 
-const ADD_ITEM_MUTATION = gql`
-  mutation add_item(
-    $title: String!
-    $place: String!
-    $description: String!
-    $image: String
-    $largeImage: String
+const UPDATE_ITEM_MUTATION = gql`
+  mutation UPDATE_ITEM_MUTATION(
+    $id: String!
+    $title: String
+    $place: String
+    $description: String
   ) {
-    createItem(
+    updateItem(
       title: $title
       place: $place
       description: $description
-      image: $image
-      largeImage: $largeImage
+      id: $id
     ) {
       title
       _id
@@ -111,24 +109,23 @@ class UpdateItem extends Component {
         {({ data, loading }) => {
           if (loading) return <p>...loading...</p>;
           return (
-            <Mutation mutation={ADD_ITEM_MUTATION}>
-              {(add_item, { loading, error }) => (
+            <Mutation mutation={UPDATE_ITEM_MUTATION}>
+              {(updateItem, { loading, error }) => (
                 <Form
                   onSubmit={async evt => {
                     evt.preventDefault();
-                    const res = await add_item({
+                    const res = await updateItem({
                       variables: {
+                        id: this.props.id,
                         title: this.state.title,
                         place: this.state.place,
-                        description: this.state.description,
-                        image: this.state.image,
-                        largeImage: this.state.largeImage
+                        description: this.state.description
                       }
                     });
                     if (error) return <p>{error.message}</p>;
                     Router.push({
                       pathname: "/item",
-                      query: { id: res.data.item.createItem._id }
+                      query: { id: this.props.id }
                     });
                   }}
                 >
