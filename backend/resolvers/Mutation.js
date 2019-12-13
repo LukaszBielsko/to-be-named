@@ -1,6 +1,4 @@
 const Item = require("../mongo/schema");
-const mongoose = require("mongoose");
-const ObjectId = mongoose.Types.ObjectId;
 
 const Mutation = {
   createItem: async (parent, args, ctx, info) => {

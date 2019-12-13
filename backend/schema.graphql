@@ -1,5 +1,6 @@
 type Query {
-  getStreetArts: [Item]
+  items: [Item]
+  item(id: String!): Item
 }
 
 type Mutation {

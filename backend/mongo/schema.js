@@ -7,7 +7,7 @@ const pieceOfArt = new Schema({
   description: String,
   place: String,
   image: String,
-  largeImage: String,
+  largeImage: String
 });
 
 module.exports = mongoose.model("pieceOfArt", pieceOfArt);
