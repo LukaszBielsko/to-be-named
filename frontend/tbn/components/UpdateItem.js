@@ -1,30 +1,8 @@
 import React, { Component } from "react";
 import gql from "graphql-tag";
-import { Mutation } from "react-apollo";
+import { Mutation, Query } from "react-apollo";
 import styled, { keyframes } from "styled-components";
 import Router from "next/router";
-
-const ADD_ITEM_MUTATION = gql`
-  mutation add_item(
-    $title: String!
-    $place: String!
-    $description: String!
-    $image: String
-    $largeImage: String
-  ) {
-    createItem(
-      title: $title
-      place: $place
-      description: $description
-      image: $image
-      largeImage: $largeImage
-    ) {
-      title
-      _id
-      place
-    }
-  }
-`;
 
 const Form = styled.form`
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -84,14 +62,42 @@ const Form = styled.form`
   }
 `;
 
-class Add extends Component {
-  state = {
-    title: "Yey hej",
-    description: "Juhu wiuhu",
-    place: "Austin, Texas",
-    image: "",
-    largeImage: ""
-  };
+const ADD_ITEM_MUTATION = gql`
+  mutation add_item(
+    $title: String!
+    $place: String!
+    $description: String!
+    $image: String
+    $largeImage: String
+  ) {
+    createItem(
+      title: $title
+      place: $place
+      description: $description
+      image: $image
+      largeImage: $largeImage
+    ) {
+      title
+      _id
+      place
+    }
+  }
+`;
+
+/* TODO go over it again and again :)  */
+
+const SINGLE_ITEM_QUERY = gql`
+  query SINGLE_ITEM_QUERY($id: String!) {
+    item(id: $id) {
+      title
+      place
+      description
+    }
+  }
+`;
+
+class UpdateItem extends Component {
+  state = {};
 
   handleChange = evt => {
     this.setState({
@@ -99,99 +105,84 @@ class Add extends Component {
     });
   };
 
-  /* TODO go thrugh this function again and again  */
-
-  uploadFile = async evt => {
-    const files = evt.target.files;
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "street-art");
-
-    const res = await fetch("https://api.cloudinary.com/v1_1/lukwal/upload", {
-      method: "POST",
-      body: data
-    });
-
-    const file = await res.json();
-    console.log(file);
-    this.setState({
-      image: file.secure_url,
-      largeImage: file.eager[0].secure_url
-    });
-  };
-
   render() {
     return (
-      <>
-        <Mutation mutation={ADD_ITEM_MUTATION}>
-          {(add_item, { loading, error }) => (
-            <Form
-              onSubmit={async evt => {
-                evt.preventDefault();
-                const res = await add_item({
-                  variables: {
-                    title: this.state.title,
-                    place: this.state.place,
-                    description: this.state.description,
-                    image: this.state.image,
-                    largeImage: this.state.largeImage
-                  }
-                });
-                if (error) return <p>{error.message}</p>;
-                Router.push({
-                  pathname: "/item",
-                  query: { id: res.data.createItem._id }
-                });
-              }}
-            >
-              <fieldset disabled={false}>
-                <label htmlFor="title">
-                  Title
-                  <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    placeholder="Title"
-                    required
-                    value={this.state.title}
-                    onChange={this.handleChange}
-                  />
-                </label>
+      <Query query={SINGLE_ITEM_QUERY}>
+        {(loading, error, data) => {
+          console.log(data);
+          if (loading) return <p>...loading...</p>;
+          return (
+            <Mutation mutation={ADD_ITEM_MUTATION}>
+              {(add_item, { loading, error }) => (
+                <Form
+                  onSubmit={async evt => {
+                    evt.preventDefault();
+                    const res = await add_item({
+                      variables: {
+                        title: this.state.title,
+                        place: this.state.place,
+                        description: this.state.description,
+                        image: this.state.image,
+                        largeImage: this.state.largeImage
+                      }
+                    });
+                    if (error) return <p>{error.message}</p>;
+                    Router.push({
+                      pathname: "/item",
+                      query: { id: res.data.createItem._id }
+                    });
+                  }}
+                >
+                  <fieldset disabled={false}>
+                    <label htmlFor="title">
+                      Title
+                      <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        placeholder="Title"
+                        required
+                        value={this.state.title}
+                        onChange={this.handleChange}
+                      />
+                    </label>
 
-                <label htmlFor="description">
-                  Description
-                  <input
-                    id="description"
-                    name="description"
-                    placeholder="Very short description please ;)"
-                    // required
-                    value={this.state.description}
-                    onChange={this.handleChange}
-                  />
-                </label>
+                    <label htmlFor="description">
+                      Description
+                      <input
+                        id="description"
+                        name="description"
+                        placeholder="Very short description please ;)"
+                        // required
+                        value={this.state.description}
+                        onChange={this.handleChange}
+                      />
+                    </label>
 
-                <label htmlFor="place">
-                  Place
-                  <input
-                    id="place"
-                    name="place"
-                    placeholder="Where did you find it?"
-                    required
-                    value={this.state.place}
-                    onChange={this.handleChange}
-                  />
-                </label>
-                <button type="submit">Submit</button>
-              </fieldset>
-            </Form>
-          )}
-        </Mutation>
-      </>
+                    <label htmlFor="place">
+                      Place
+                      <input
+                        id="place"
+                        name="place"
+                        placeholder="Where did you find it?"
+                        required
+                        value={this.state.place}
+                        onChange={this.handleChange}
+                      />
+                    </label>
+                    <button type="submit">Submit</button>
+                  </fieldset>
+                </Form>
+              )}
+            </Mutation>
+          );
+        }}
+      </Query>
     );
   }
 }
 
-export default Add;
+export default UpdateItem;
 
 {
   /* <label htmlFor="file">
