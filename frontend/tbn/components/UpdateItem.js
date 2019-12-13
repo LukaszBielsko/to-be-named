@@ -107,9 +107,8 @@ class UpdateItem extends Component {
 
   render() {
     return (
-      <Query query={SINGLE_ITEM_QUERY}>
-        {(loading, error, data) => {
-          console.log(data);
+      <Query query={SINGLE_ITEM_QUERY} variables={{ id: this.props.id }}>
+        {({ data, loading }) => {
           if (loading) return <p>...loading...</p>;
           return (
             <Mutation mutation={ADD_ITEM_MUTATION}>
@@ -129,7 +128,7 @@ class UpdateItem extends Component {
                     if (error) return <p>{error.message}</p>;
                     Router.push({
                       pathname: "/item",
-                      query: { id: res.data.createItem._id }
+                      query: { id: res.data.item.createItem._id }
                     });
                   }}
                 >
@@ -142,6 +141,7 @@ class UpdateItem extends Component {
                         name="title"
                         placeholder="Title"
                         required
+                        defaultValue={data.item.title}
                         value={this.state.title}
                         onChange={this.handleChange}
                       />
@@ -153,7 +153,8 @@ class UpdateItem extends Component {
                         id="description"
                         name="description"
                         placeholder="Very short description please ;)"
-                        // required
+                        required
+                        defaultValue={data.item.description}
                         value={this.state.description}
                         onChange={this.handleChange}
                       />
@@ -166,6 +167,7 @@ class UpdateItem extends Component {
                         name="place"
                         placeholder="Where did you find it?"
                         required
+                        defaultValue={data.item.place}
                         value={this.state.place}
                         onChange={this.handleChange}
                       />
