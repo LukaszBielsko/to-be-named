@@ -14,6 +14,14 @@ const Mutation = {
       if (err) return console.error("error", err);
     });
     return item;
+  },
+  updateItem: async (parent, args, ctx, info) => {
+    const item = await Item.findById(args.id);
+    item.title = args.title || item.title;
+    item.place = args.place || item.place;
+    item.description = args.description || item.description;
+    item.save();
+    return item;
   }
 };
 
