@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Router from "next/router";
 
 const Card = styled.div`
   background: #fff;
@@ -41,6 +42,13 @@ const Card = styled.div`
   }
 `;
 
+const handleEdit = id => {
+  Router.push({
+    pathname: "/update",
+    query: { id }
+  });
+};
+
 const Item = props => (
   <Card>
     <img className="image" src={props.largeImage} />
@@ -49,6 +57,7 @@ const Item = props => (
       <div className="item-title">{props.title}</div>
       <div className="item-description">{props.description}</div>
     </div>
+    <button onClick={() => handleEdit(props._id)}>Edit</button>
   </Card>
 );
 
