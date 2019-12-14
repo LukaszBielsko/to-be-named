@@ -82,7 +82,15 @@ const UPDATE_ITEM_MUTATION = gql`
   }
 `;
 
-/* TODO go over it again and again :)  */
+/* 
+  assing query to const
+  use query keyword for named query
+  name the query the same as const (tests)
+  determine types of variables ($)
+  call query (defined in graphql schema)
+  pass variables to query (id: $id)
+  return what you need
+*/
 
 const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: String!) {
@@ -169,7 +177,7 @@ class UpdateItem extends Component {
                         onChange={this.handleChange}
                       />
                     </label>
-                    <button type="submit">Submit</button>
+                    <button type="submit">Save changes</button>
                   </fieldset>
                 </Form>
               )}
