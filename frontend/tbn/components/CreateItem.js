@@ -4,6 +4,15 @@ import { Mutation } from "react-apollo";
 import styled, { keyframes } from "styled-components";
 import Router from "next/router";
 
+/*  
+  store query in a const
+  use mutation keyword
+  name mutation the same as const (for tests) 
+  name variables ($) and determine the type
+  call mutation (has to match the graphql schema)
+  assign variables to fields
+  return what you need
+*/
 const ADD_ITEM_MUTATION = gql`
   mutation add_item(
     $title: String!
@@ -86,9 +95,9 @@ const Form = styled.form`
 
 class Add extends Component {
   state = {
-    title: "Yey hej",
-    description: "Juhu wiuhu",
-    place: "Austin, Texas",
+    title: "",
+    description: "",
+    place: "",
     image: "",
     largeImage: ""
   };
@@ -182,14 +191,14 @@ class Add extends Component {
                   />
                 </label>
 
-                {/* <label htmlFor="file">
+                <label htmlFor="file">
                   <input
                     name="file"
                     type="file"
                     required
                     onChange={this.uploadFile}
                   />
-                </label> */}
+                </label>
 
                 {this.state.image && <img src={this.state.image} />}
 

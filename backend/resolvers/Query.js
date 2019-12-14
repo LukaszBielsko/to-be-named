@@ -1,9 +1,14 @@
-const Item = require('../mongo/schema')
+const Item = require("../mongo/schema");
 
 const Query = {
-    getStreetArts: () => {
-        return Item.find({})
-    }
-}
+  items: async () => {
+    const items = await Item.find({});
+    return items;
+  },
+  item: async (obj, args, context, info) => {
+    const item = await Item.findById(args.id); //with id
+    return item;
+  }
+};
 
 module.exports = Query;
