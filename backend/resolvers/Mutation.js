@@ -22,9 +22,17 @@ const Mutation = {
     item.description = args.description || item.description;
     item.save();
     return item;
+  },
+  deleteItem: async (parent, args, ctx, info) => {
+    const item = await Item.findById(args.id);
+    console.log("\n\n ITEM \n\n", item);
+    const res = Item.deleteOne({ _id: args.id }, () => {
+      console.log("\n\n DELETE ITEM \n\n", res);
+    });
   }
 };
 
 module.exports = Mutation;
 
-// i was not getting back a saved item but
+// const res = await Character.remove({ name: 'Eddard Stark' });
+// res.deletedCount; // Number of documents removed
