@@ -24,8 +24,14 @@ const Mutation = {
     return item;
   },
   deleteItem: async (parent, args, ctx, info) => {
+    // 1. find the item
+    // 2. check if user owns it and has permissions
+    // 3. delete it
+
     const item = await Item.findById(args.id);
     console.log("\n\n ITEM \n\n", item);
+    console.log("\n\n ARGS \n\n", args);
+
     const res = Item.deleteOne({ _id: args.id }, () => {
       console.log("\n\n DELETE ITEM \n\n", res);
     });

@@ -60,7 +60,7 @@ const Item = props => (
       <div className="item-description">{props.description}</div>
     </div>
     <button onClick={() => handleEdit(props._id)}>Edit</button>
-    <DeleteItem> Delete this item </DeleteItem>
+    <DeleteItem id={props._id}> Delete this item </DeleteItem>
   </Card>
 );
 
