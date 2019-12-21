@@ -192,12 +192,7 @@ class Add extends Component {
                 </label>
 
                 <label htmlFor="file">
-                  <input
-                    name="file"
-                    type="file"
-                    required
-                    onChange={this.uploadFile}
-                  />
+                  <input name="file" type="file" onChange={this.uploadFile} />
                 </label>
 
                 {this.state.image && <img src={this.state.image} />}

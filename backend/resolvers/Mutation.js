@@ -13,28 +13,32 @@ const Mutation = {
     const saved = await item.save((err, savedItem) => {
       if (err) return console.error("error", err);
     });
+
     return item;
   },
+
   updateItem: async (parent, args, ctx, info) => {
     const item = await Item.findById(args.id);
     item.title = args.title || item.title;
     item.place = args.place || item.place;
     item.description = args.description || item.description;
     item.save();
+
     return item;
   },
+
   deleteItem: async (parent, args, ctx, info) => {
     // 1. find the item
-    // 2. check if user owns it and has permissions
+    /* TODO  2. check if user owns it and has permissions  */
     // 3. delete it
 
     const item = await Item.findById(args.id);
-    console.log("\n\n ITEM \n\n", item);
-    console.log("\n\n ARGS \n\n", args);
 
     const res = Item.deleteOne({ _id: args.id }, () => {
-      console.log("\n\n DELETE ITEM \n\n", res);
+      console.log(`Item ${args.id} --- DELETED`);
     });
+
+    return item;
   }
 };
 

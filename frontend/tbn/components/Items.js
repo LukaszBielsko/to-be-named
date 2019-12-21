@@ -31,11 +31,12 @@ class Items extends Component {
         <Query query={GET_STREET_ARTS}>
           {({ data, error, loading }) => {
             if (error) return `error: ${error.message}`;
-            if (loading) return "... loading ...";
+            if (loading) return <p>"... loading ..."</p>;
             return (
               <>
                 {data.items.map(item => {
-                  return <Item {...item} />;
+                  console.log(item._id);
+                  return <Item {...item} key={item._id} />;
                 })}
               </>
             );
@@ -47,3 +48,4 @@ class Items extends Component {
 }
 
 export default Items;
+export { GET_STREET_ARTS };

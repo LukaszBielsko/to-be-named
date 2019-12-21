@@ -17,7 +17,7 @@ type Mutation {
     place: String
     description: String
   ): Item!
-  deleteItem(id: String!): Item
+  deleteItem(id: String!): Item!
 }
 
 type Item {
