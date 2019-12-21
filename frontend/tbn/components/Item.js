@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Router from "next/router";
 
+import DeleteItem from "../components/DeleteItem";
+
 const Card = styled.div`
   background: #fff;
   border-radius: 2px;
@@ -58,6 +60,7 @@ const Item = props => (
       <div className="item-description">{props.description}</div>
     </div>
     <button onClick={() => handleEdit(props._id)}>Edit</button>
+    <DeleteItem id={props._id}> Delete this item </DeleteItem>
   </Card>
 );
 

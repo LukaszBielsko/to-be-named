@@ -84,8 +84,8 @@ const UPDATE_ITEM_MUTATION = gql`
 
 /* 
   assing query to const
-  use query keyword for named query
-  name the query the same as const (tests)
+  use query (or mutation) keyword for named query (or mutation)
+  name the query the same as const (for tests)
   determine types of variables ($)
   call query (defined in graphql schema)
   pass variables to query (id: $id)
