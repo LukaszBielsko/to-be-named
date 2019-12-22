@@ -46,6 +46,11 @@ const Card = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    margin-top: 20px;
+      button {
+      flex-grow: 0.3;
+      padding: 3px;
+    }
   }
 `;
 
