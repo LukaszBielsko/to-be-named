@@ -21,12 +21,10 @@ class DelteItem extends Component {
       query: GET_STREET_ARTS
     });
     // remove  item from cache
-    console.log("cache data", data);
     data.items = data.items.filter(
       item => item._id !== payload.data.deleteItem._id
     );
     // update cache
-    console.log("new data after filter", data);
     /*
       FIXME - won't update the cache
       im not getting cached data, 
