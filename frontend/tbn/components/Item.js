@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Router from "next/router";
+import Link from 'next/link';
 
 import DeleteItem from "../components/DeleteItem";
 
@@ -23,9 +24,11 @@ const Card = styled.div`
     padding: 10px;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
+    cursor: pointer;
   }
   .item-header {
     padding-left: 20px;
+    cursor: pointer;
   }
   .item-title {
     font-size: 4rem;
@@ -61,14 +64,29 @@ const handleEdit = id => {
   });
 };
 
+/*TODO putting everything inside one Link
+  messes up the styling
+  that's the reason why I had to use two
+*/
+
 const Item = props => (
   <Card>
-    <img className="image" src={props.largeImage} />
-    <div className="item-header">
-      <div className="item-place">{props.place}</div>
-      <div className="item-title">{props.title}</div>
-      <div className="item-description">{props.description}</div>
-    </div>
+    <Link href={{
+      pathname: 'item',
+      query: { id: props._id }
+    }}>
+      <img className="image" src={props.largeImage} />
+    </Link>
+    <Link href={{
+      pathname: 'item',
+      query: { id: props._id }
+    }}>
+      <div className="item-header">
+        <div className="item-place">{props.place}</div>
+        <div className="item-title">{props.title}</div>
+        <div className="item-description">{props.description}</div>
+      </div>
+    </Link>
     <div className="item-buttons">
       <button onClick={() => handleEdit(props._id)}>Edit</button>
       <DeleteItem id={props._id}> Delete this item </DeleteItem>
@@ -76,5 +94,8 @@ const Item = props => (
     </div>
   </Card>
 );
+
+
+
 
 export default Item;
