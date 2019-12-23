@@ -42,6 +42,16 @@ const Card = styled.div`
   }
   .item-description {
   }
+  .item-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 20px;
+      button {
+      flex-grow: 0.3;
+      padding: 3px;
+    }
+  }
 `;
 
 const handleEdit = id => {
@@ -59,8 +69,11 @@ const Item = props => (
       <div className="item-title">{props.title}</div>
       <div className="item-description">{props.description}</div>
     </div>
-    <button onClick={() => handleEdit(props._id)}>Edit</button>
-    <DeleteItem id={props._id}> Delete this item </DeleteItem>
+    <div className="item-buttons">
+      <button onClick={() => handleEdit(props._id)}>Edit</button>
+      <DeleteItem id={props._id}> Delete this item </DeleteItem>
+      <button> Button</button>
+    </div>
   </Card>
 );
 
