@@ -5,11 +5,14 @@ import gql from 'graphql-tag';
 
 const StyledSingleItem = styled.div`
   display: flex;
-  .image {
-
+  img {
+    width: 30%
+  }
+  span {
+    font-size: 1.5rem;
   }
   .info {
-
+    padding-left: 30px;
   }
 `
 
@@ -28,17 +31,19 @@ const SINGLE_ITEM_QUERY = gql`
 class SingleItem extends Component {
   render() {
     return (
-      <Query query={SINGLE_ITEM_QUERY}>
-        {() => (
-          <StyledSingleItem>
-            <div className="image">this is image</div>
+      <Query query={SINGLE_ITEM_QUERY} variables={{ id: this.props.id }}>
+        {({ data, error, loading }) => {
+          if (loading) return <p>...loading...</p>
+          if (!data) return <p>no item found</p>
+          return <StyledSingleItem>
+            <img src={data.item.largeImage} alt="art :)" />
             <div className="info">
-              <p>title</p>
-              <p>place</p>
-              <p>desc</p>
+              <p><span>title</span> {data.item.title}</p>
+              <p><span>place</span> {data.item.place}</p>
+              <p><span>description</span> {data.item.description}</p>
             </div>
           </StyledSingleItem>
-        )}
+        }}
       </Query>
     )
   }
