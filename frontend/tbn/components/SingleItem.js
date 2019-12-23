@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Query } from "react-apollo";
 import styled from 'styled-components';
 import gql from 'graphql-tag';
+import Head from 'next/head';
 
 const StyledSingleItem = styled.div`
   display: flex;
@@ -36,6 +37,9 @@ class SingleItem extends Component {
           if (loading) return <p>...loading...</p>
           if (!data) return <p>no item found</p>
           return <StyledSingleItem>
+            <Head>
+              <title> {data.item.title} </title>
+            </Head>
             <img src={data.item.largeImage} alt="art :)" />
             <div className="info">
               <p><span>title</span> {data.item.title}</p>

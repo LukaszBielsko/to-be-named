@@ -8,7 +8,7 @@ const Card = styled.div`
   background: #fff;
   border-radius: 2px;
   display: inline-block;
-  height: 650px;
+  height: 400px;
   margin: 1rem;
   position: relative;
   width: 350px;
@@ -19,12 +19,13 @@ const Card = styled.div`
     transform: scale(1.01);
   }
   .image {
-    height: 70%;
+    height: 50%;
     width: 100%;
     padding: 10px;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     cursor: pointer;
+    object-fit: cover;
   }
   .item-header {
     padding-left: 20px;
