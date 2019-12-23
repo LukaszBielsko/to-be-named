@@ -35,7 +35,6 @@ class Items extends Component {
             return (
               <>
                 {data.items.map(item => {
-                  console.log(item._id);
                   return <Item {...item} key={item._id} />;
                 })}
               </>
