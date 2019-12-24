@@ -10,9 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "graphql": "^14.5.8",
     "graphql-yoga": "^1.18.3",
     "mongoose": "^5.8.0",
-    "nodemon": "^2.0.1"
+    "nodemon": "^2.0.1",
+    "passport": "^0.4.1"
   }
 }
