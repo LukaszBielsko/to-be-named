@@ -14,7 +14,6 @@ const Mutation = {
       image: args.image,
       largeImage: args.largeImage
     });
-    console.log(item);
     const saved = await item.save((err, savedItem) => {
       if (err) return console.error("error", err);
     });
@@ -53,8 +52,9 @@ const Mutation = {
       password
     })
     await user.save()
+    // create jwtToken
     const jwtToken = jwt.sign({ userId: user._id }, process.env.APP_SECRET)
-    console.log('ctx:  ', ctx)
+    // send token as a cookie
     ctx.response.cookie('jwtToken', jwtToken, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
