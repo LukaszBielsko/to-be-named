@@ -1,5 +1,6 @@
 const createServer = require('./createServer')
 const startDB = require('./mongo/connect')
+require('dotenv').config()
 
 const server = createServer()
 startDB()
