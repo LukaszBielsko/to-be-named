@@ -1,4 +1,5 @@
-const Item = require("../mongo/schema");
+const db = require("../mongo/schema");
+const Item = db.Item
 
 const Query = {
   items: async () => {

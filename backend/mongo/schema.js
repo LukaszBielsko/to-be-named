@@ -16,5 +16,7 @@ const user = new Schema({
   password: String
 })
 
-exports.pieceOfArt = mongoose.model("pieceOfArt", pieceOfArt);
-exports.user = mongoose.model('user', user)
+module.exports = {
+  Item: mongoose.model("pieceOfArt", pieceOfArt),
+  User: exports.user = mongoose.model('user', user)
+}

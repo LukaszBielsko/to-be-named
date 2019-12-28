@@ -1,4 +1,7 @@
-const Item = require("../mongo/schema");
+const db = require("../mongo/schema");
+const Item = db.Item
+const User = db.User
+const bcrypt = require('bcryptjs')
 
 const Mutation = {
   createItem: async (parent, args, ctx, info) => {
@@ -39,6 +42,17 @@ const Mutation = {
     });
 
     return item;
+  },
+
+  signUp: async (parent, args, ctx, info) => {
+    const password = await bcrypt.hash(args.password, 10)
+    const user = new User({
+      ...args,
+      password
+    })
+    await user.save()
+
+    return user
   }
 };
 
