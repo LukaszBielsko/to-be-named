@@ -1,7 +1,9 @@
 const db = require("../mongo/schema");
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+
 const Item = db.Item
 const User = db.User
-const bcrypt = require('bcryptjs')
 
 const Mutation = {
   createItem: async (parent, args, ctx, info) => {
@@ -51,6 +53,12 @@ const Mutation = {
       password
     })
     await user.save()
+    const jwtToken = jwt.sign({ userId: user._id }, process.env.APP_SECRET)
+    console.log('ctx:  ', ctx)
+    ctx.response.cookie('jwtToken', jwtToken, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
+    });
 
     return user
   }
