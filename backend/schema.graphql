@@ -1,6 +1,7 @@
 type Query {
   items: [Item]
   item(id: String!): Item
+  me: User
 }
 
 type Mutation {
