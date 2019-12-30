@@ -1,4 +1,9 @@
-const Item = require("../mongo/schema");
+const db = require("../mongo/schema");
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+
+const Item = db.Item
+const User = db.User
 
 const Mutation = {
   createItem: async (parent, args, ctx, info) => {
@@ -9,7 +14,6 @@ const Mutation = {
       image: args.image,
       largeImage: args.largeImage
     });
-    console.log(item);
     const saved = await item.save((err, savedItem) => {
       if (err) return console.error("error", err);
     });
@@ -39,6 +43,24 @@ const Mutation = {
     });
 
     return item;
+  },
+
+  signUp: async (parent, args, ctx, info) => {
+    const password = await bcrypt.hash(args.password, 10)
+    const user = new User({
+      ...args,
+      password
+    })
+    await user.save()
+    // create jwtToken
+    const jwtToken = jwt.sign({ userId: user._id }, process.env.APP_SECRET)
+    // send token as a cookie
+    ctx.response.cookie('jwtToken', jwtToken, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
+    });
+
+    return user
   }
 };
 

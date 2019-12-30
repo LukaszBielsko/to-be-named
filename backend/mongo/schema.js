@@ -10,4 +10,13 @@ const pieceOfArt = new Schema({
   largeImage: String
 });
 
-module.exports = mongoose.model("pieceOfArt", pieceOfArt);
+const user = new Schema({
+  name: String,
+  email: String,
+  password: String
+})
+
+module.exports = {
+  Item: mongoose.model("pieceOfArt", pieceOfArt),
+  User: exports.user = mongoose.model('user', user)
+}

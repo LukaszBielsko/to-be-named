@@ -1,6 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga')
 
-// const db = require('./db')
+//startDB - some funny business here 
+const db = require('./mongo/connect')()
 const Mutation = require('./resolvers/Mutation')
 const Query = require('./resolvers/Query')
 
@@ -14,8 +15,11 @@ function createServer() {
     resolverValidationOptions: {
       requireResolversForResolveType: false
     },
-    /* TODO no idea what is it really */
-    //   context: req => ({ ...req, db }) 
+    /* TODO no idea what is it really
+      this is graphql execution stuff
+      read the docs, man, read the docs
+    */
+    context: req => ({ ...req, db })
   })
 }
 

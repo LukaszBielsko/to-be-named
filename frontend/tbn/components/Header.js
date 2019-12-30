@@ -81,12 +81,18 @@ const Header = (props) => {
             align-items: flex-end;
             display: flex;
             flex-direction: row;
-            margin-right: 10rem;
+            margin-right: 3rem;
             input {
                 padding-left: 10px;
                 font-size: 2rem;
                 padding-top: 5px;
                 padding-bottom: 5px;
+            }
+        }
+        .sign-up {
+            cursor: pointer;
+            p {
+                border: 1px solid white;
             }
         }
     `
@@ -127,6 +133,11 @@ const Header = (props) => {
                     cart
                 </div> */}
             </div>
+            <Link href="/signup">
+                <div className="sign-up">
+                    <p>SU</p>
+                </div>
+            </Link>
         </Navbar>
     );
 };
