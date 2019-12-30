@@ -13,7 +13,7 @@ const Query = {
   },
   me: async (obj, args, context, info) => {
     const user = await User.findById(context.request.userId)
-    if (!user) return null
+    if (!context.request.userId) return null
     return user
   }
 };

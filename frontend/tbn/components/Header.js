@@ -3,6 +3,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import NProgress from 'nprogress';
 import Router from 'next/router';
+import User from '../components/User';
 
 const nprogressStart = url => {
     NProgress.start()
@@ -138,7 +139,7 @@ const Header = (props) => {
                     <p>SU</p>
                 </div>
             </Link>
-        </Navbar>
+        </Navbar >
     );
 };
 
