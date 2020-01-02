@@ -21,8 +21,12 @@ type Mutation {
   deleteItem(id: String!): Item!
   signUp(name: String!, email: String!, password: String!): User
   signIn(email: String!, password: String!): User
+  signOut: SuccessMessage
 }
 
+type SuccessMessage {
+  message: String
+}
 type Item {
   title: String
   place: String
