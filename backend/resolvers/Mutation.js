@@ -94,6 +94,7 @@ const Mutation = {
     return user;
   },
   signOut: (parent, args, ctx, info) => {
+    console.log('ctx from mutation', ctx);
     ctx.response.clearCookie('token');
     return { message: 'Goodbye!' };
   },

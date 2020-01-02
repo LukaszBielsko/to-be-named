@@ -27,6 +27,7 @@ type Mutation {
 type SuccessMessage {
   message: String
 }
+
 type Item {
   title: String
   place: String

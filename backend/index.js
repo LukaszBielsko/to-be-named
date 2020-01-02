@@ -11,13 +11,10 @@ const server = createServer();
 server.express.use(cookieParser());
 
 server.express.use((req, res, next) => {
-  console.log('MIDDLEWARE');
   const { token } = req.cookies;
-  console.log({ token });
+  console.log('middleware token', { token });
   if (token) {
     const { userId } = jwt.verify(token, process.env.APP_SECRET);
-    console.log('token: ', token);
-    console.log('userId: ', userId);
     /*      
       why this is sticked to request
       im handling a request here
