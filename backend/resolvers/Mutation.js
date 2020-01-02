@@ -14,7 +14,7 @@ const Mutation = {
       image: args.image,
       largeImage: args.largeImage,
     });
-    await item.save((err, savedItem) => {
+    await item.save(err => {
       if (err) return console.error('error', err);
     });
 
@@ -52,10 +52,10 @@ const Mutation = {
       password,
     });
     await user.save();
-    // create jwtToken
-    const jwtToken = jwt.sign({ userId: user._id }, process.env.APP_SECRET);
+    // create token
+    const token = jwt.sign({ userId: user._id }, process.env.APP_SECRET);
     // send token as a cookie
-    ctx.response.cookie('jwtToken', jwtToken, {
+    ctx.response.cookie('token', token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
     });
@@ -65,16 +65,31 @@ const Mutation = {
 
   signIn: async (parent, { email, password }, ctx, info) => {
     const user = await User.findOne({ email });
-    console.log('user password', user.password);
+    // console.log('user password', user.password);
     if (!user) {
       throw new Error('User not found.');
     }
-    await bcrypt.compare(password, user.password, (error, isMatch) => {
-      console.log('isMatch', isMatch);
-      console.log('err', error);
-      if (isMatch) {
-        console.log("yey, we've got a user");
-      }
+    // await bcrypt.compare(password, user.password, (error, isMatch) => {
+    //   console.log('isMatch', isMatch);
+    //   console.log('err', error);
+    //   if (isMatch) {
+    //     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    //     ctx.response.cookie('token', token, {
+    //       httpOnly: true,
+    //       maxAge: 1000 * 60 * 60 * 24 * 365,
+    //     });
+    //   }
+    // });
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) {
+      throw new Error('Invalid Password!');
+    }
+    // 3. generate the JWT Token
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    // 4. Set the cookie with the token
+    ctx.response.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365,
     });
     return user;
   },

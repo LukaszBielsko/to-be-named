@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Query } from 'react-apollo';
+import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Form from './styles/form';
 
-const SIGN_IN_QUERY = gql`
-  query SIGN_IN_QUERY($email: String!, $password: String!) {
-    signUp(email: $email, password: $password) {
+const SIGN_IN_MUTATION = gql`
+  mutation SIGN_IN_MUTATION($email: String!, $password: String!) {
+    signIn(email: $email, password: $password) {
       _id
       email
       password
@@ -13,7 +13,7 @@ const SIGN_IN_QUERY = gql`
   }
 `;
 
-class SignUp extends Component {
+class SignIn extends Component {
   state = {
     email: '',
     password: '',
@@ -26,7 +26,7 @@ class SignUp extends Component {
   render() {
     const { email, password } = this.state;
     return (
-      <Query query={SIGN_IN_QUERY} variables={this.state}>
+      <Mutation mutation={SIGN_IN_MUTATION} variables={this.state}>
         {signIn => (
           <Form
             method="post"
@@ -36,7 +36,7 @@ class SignUp extends Component {
               this.setState({ email: '', password: '' });
             }}
           >
-            <h3>Please enter your details</h3>
+            <h3>Please sign in</h3>
             <fieldset>
               <label htmlFor="email">
                 <input
@@ -62,9 +62,9 @@ class SignUp extends Component {
             </fieldset>
           </Form>
         )}
-      </Query>
+      </Mutation>
     );
   }
 }
 
-export default SignUp;
+export default SignIn;

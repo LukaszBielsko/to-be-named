@@ -1,8 +1,12 @@
-import React from "react";
-import SignUp from "../components/SignUp";
+import React from 'react';
+import SignUp from '../components/SignUp';
+import SignIn from '../components/SignIn';
 
-const signUp = props => {
-  return <SignUp />;
-};
+const signUp = props => (
+  <>
+    <SignUp />
+    <SignIn />
+  </>
+);
 
 export default signUp;

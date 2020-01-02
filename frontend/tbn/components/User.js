@@ -6,9 +6,9 @@ const CURRENT_USER_QUERY = gql`
     me {
       _id
       name
-    } 
+    }
   }
-`
+`;
 
 const User = props => (
   <Query {...props} query={CURRENT_USER_QUERY}>
@@ -17,14 +17,14 @@ const User = props => (
       return props.children(payload)
     }} */}
     {({ loading, error, data }) => {
-      console.log(data)
+      console.log(data);
       let me;
-      if (data) me = data
-      if (me) return props.children(me)
-      else return null
+      if (data) me = data;
+      if (me) return props.children(me);
+      return null;
     }}
   </Query>
-)
+);
 
 export default User;
 
