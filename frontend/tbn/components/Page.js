@@ -1,15 +1,13 @@
 import React from 'react';
 
+import styled, { createGlobalStyle } from 'styled-components';
 import Header from './Header';
-import styled, { createGlobalStyle} from 'styled-components';
 import UnderHeader from './UnderHeader';
 import Meta from './Meta';
+import AboveHeader from './AboveHeader';
 
-
-const Page = (props) => {
-
-
-    const GlobalStyle = createGlobalStyle`
+const Page = props => {
+  const GlobalStyle = createGlobalStyle`
     html {
        box-sizing: border-box;
        font-size: 10px;
@@ -26,30 +24,30 @@ const Page = (props) => {
         background: #ebedee;
 
     }
-    `
-    // inner div for centering whatever is rendered from Link
-    const Inner = styled.div`
-        max-width: 90%;
-        margin: 0 auto;
-        /* background: lightgoldenrodyellow; */
-        padding: 2rem;
     `;
-    
+  // inner div for centering whatever is rendered from Link
+  const Inner = styled.div`
+    max-width: 90%;
+    margin: 0 auto;
+    /* background: lightgoldenrodyellow; */
+    padding: 2rem;
+  `;
 
-    return (
-        <div>
-            <GlobalStyle/>
-            <Meta/>
-            <Header />
-            <UnderHeader/>
-            <Inner>
-                {/*  what are children here?
+  return (
+    <div>
+      <GlobalStyle />
+      <Meta />
+      <AboveHeader />
+      <Header />
+      <UnderHeader />
+      <Inner>
+        {/*  what are children here?
                  it is Component in the _app.js file 
                  next.js magic renders whatever is clicked */}
-                {props.children}
-            </Inner>
-        </div>
-    );
+        {props.children}
+      </Inner>
+    </div>
+  );
 };
 
 export default Page;

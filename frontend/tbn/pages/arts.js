@@ -1,11 +1,6 @@
 import React from 'react';
 import Items from '../components/Items';
 
-const test1 = (props) => {
+const test1 = props => <Items />;
 
-    return (
-        <Items />
-    );
-};
-
-export default test1;   
+export default test1;
