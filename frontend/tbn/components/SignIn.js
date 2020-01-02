@@ -1,28 +1,22 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-
-import { CURRENT_USER_QUERY } from './User';
 import Form from './styles/form';
 
-const SIGN_UP_MUTATION = gql`
-  mutation SIGN_UP_MUTATION(
-    $name: String!
-    $email: String!
-    $password: String!
-  ) {
-    signUp(name: $name, email: $email, password: $password) {
+import { CURRENT_USER_QUERY } from './User';
+
+const SIGN_IN_MUTATION = gql`
+  mutation SIGN_IN_MUTATION($email: String!, $password: String!) {
+    signIn(email: $email, password: $password) {
       _id
-      name
       email
       password
     }
   }
 `;
 
-class SignUp extends Component {
+class SignIn extends Component {
   state = {
-    name: '',
     email: '',
     password: '',
   };
@@ -32,34 +26,24 @@ class SignUp extends Component {
   };
 
   render() {
-    const { name, email, password } = this.state;
+    const { email, password } = this.state;
     return (
       <Mutation
-        mutation={SIGN_UP_MUTATION}
+        mutation={SIGN_IN_MUTATION}
         variables={this.state}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
-        {signUp => (
+        {signIn => (
           <Form
             method="post"
             onSubmit={event => {
               event.preventDefault();
-              signUp();
-              this.setState({ name: '', email: '', password: '' });
+              signIn();
+              this.setState({ email: '', password: '' });
             }}
           >
-            <h3>Please enter your details</h3>
+            <h3>Please sign in</h3>
             <fieldset>
-              <label htmlFor="name">
-                <input
-                  onChange={this.onChangeHandler}
-                  name="name"
-                  value={name}
-                  required
-                  type="text"
-                  placeholder="Your name"
-                />
-              </label>
               <label htmlFor="email">
                 <input
                   onChange={this.onChangeHandler}
@@ -89,4 +73,4 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+export default SignIn;

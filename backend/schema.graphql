@@ -1,6 +1,7 @@
 type Query {
   items: [Item]
   item(id: String!): Item
+  me: User
 }
 
 type Mutation {
@@ -19,6 +20,7 @@ type Mutation {
   ): Item!
   deleteItem(id: String!): Item!
   signUp(name: String!, email: String!, password: String!): User
+  signIn(email: String!, password: String!): User
 }
 
 type Item {
