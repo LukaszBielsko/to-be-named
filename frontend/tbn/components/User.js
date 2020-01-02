@@ -1,10 +1,12 @@
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import PropTypes from 'prop-types';
 
 const CURRENT_USER_QUERY = gql`
-  query CURRENT_USER_QUERY {
+  query {
     me {
       _id
+      email
       name
     }
   }
@@ -12,24 +14,45 @@ const CURRENT_USER_QUERY = gql`
 
 const User = props => (
   <Query {...props} query={CURRENT_USER_QUERY}>
-    {/* {payload => {
-      console.log(payload)
-      return props.children(payload)
-    }} */}
-    {({ loading, error, data }) => {
-      console.log(data);
-      let me;
-      if (data) me = data;
-      if (me) return props.children(me);
-      return null;
-    }}
+    {payload => props.children(payload)}
   </Query>
 );
 
-export default User;
+User.propTypes = {
+  children: PropTypes.func.isRequired,
+};
 
-/* TODO
-  how does render props exactly work?
-  how does props.children(someData)?
-  how sameData can be accessed in rendered component?
-*/
+export default User;
+export { CURRENT_USER_QUERY };
+
+// import { Query } from 'react-apollo';
+// import gql from 'graphql-tag';
+// import PropTypes from 'prop-types';
+
+// const CURRENT_USER_QUERY = gql`
+//   query CURRENT_USER_QUERY {
+//     me {
+//       _id
+//       name
+//       email
+//     }
+//   }
+// `;
+
+// const User = props => (
+//   <Query {...props} query={CURRENT_USER_QUERY}>
+//     {payload => props.children(payload)}
+//   </Query>
+// );
+
+// User.propTypes = {
+//   children: PropTypes.func.isRequired,
+// };
+
+// export default User;
+
+// /* TODO
+//   how does render props exactly work?
+//   how does props.children(someData)?
+//   how sameData can be accessed in rendered component?
+// */
