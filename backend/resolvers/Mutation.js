@@ -1,5 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { randomBytes } = require('crypto');
+const { promisify } = require('util');
 const db = require('../mongo/schema');
 
 const { Item } = db;
@@ -97,6 +99,20 @@ const Mutation = {
     console.log('ctx from mutation', ctx);
     ctx.response.clearCookie('token');
     return { message: 'Goodbye!' };
+  },
+  requestPasswordReset: async (parent, { email }, ctx, info) => {
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw new Error('User not found.');
+    }
+    const randomBytesPromise = promisify(randomBytes);
+    // do you see the clever thing below?
+    // (await functionToAwait).chainedFunction()
+    const resetToken = (await randomBytesPromise(20)).toString('hex');
+    user.resetToken = resetToken;
+    user.save();
+    return { message: 'Password reset request successfull' };
+    /* TODO sent the password change email */
   },
 };
 
