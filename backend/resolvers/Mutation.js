@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
+
 const db = require('../mongo/schema');
 
 const { Item } = db;
@@ -95,11 +96,12 @@ const Mutation = {
     });
     return user;
   },
+
   signOut: (parent, args, ctx, info) => {
-    console.log('ctx from mutation', ctx);
     ctx.response.clearCookie('token');
     return { message: 'Goodbye!' };
   },
+
   requestPasswordReset: async (parent, { email }, ctx, info) => {
     const user = await User.findOne({ email });
     if (!user) {
@@ -109,10 +111,37 @@ const Mutation = {
     // do you see the clever thing below?
     // (await functionToAwait).chainedFunction()
     const resetToken = (await randomBytesPromise(20)).toString('hex');
+    const tokenExpiry = Date.now() + 60 * 60 * 1000;
     user.resetToken = resetToken;
+    user.tokenExpiry = tokenExpiry;
     user.save();
     return { message: 'Password reset request successfull' };
     /* TODO sent the password change email */
+  },
+
+  resetPassword: async (
+    parent,
+    { email, password, confirmPassword, resetToken },
+    ctx,
+    info
+  ) => {
+    const user = await User.findOne({ email });
+    console.log('user before', user);
+    if (!user) {
+      throw new Error('User not found.');
+    }
+    if (user.resetToken !== resetToken) {
+      throw new Error('Wrong / or expired token!');
+    }
+    if (password === confirmPassword) {
+      const newPassword = await bcrypt.hash(password, 10);
+      user.password = newPassword;
+      user.save();
+    } else {
+      throw new Error("Passwords don't match");
+    }
+    console.log('user after', user);
+    return { message: 'Password reset successfull' };
   },
 };
 
