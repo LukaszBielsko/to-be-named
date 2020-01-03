@@ -126,12 +126,16 @@ const Mutation = {
     info
   ) => {
     const user = await User.findOne({ email });
-    console.log('user before', user);
     if (!user) {
       throw new Error('User not found.');
     }
     if (user.resetToken !== resetToken) {
-      throw new Error('Wrong / or expired token!');
+      throw new Error('Wrong token!');
+    }
+
+    /* TODO work this out man, work it! */
+    if (user.tokenExpiry > Date.now() + 60 * 60 * 1000) {
+      throw new Error('Token expired');
     }
     if (password === confirmPassword) {
       const newPassword = await bcrypt.hash(password, 10);
@@ -140,7 +144,13 @@ const Mutation = {
     } else {
       throw new Error("Passwords don't match");
     }
-    console.log('user after', user);
+    // create token
+    const token = jwt.sign({ userId: user._id }, process.env.APP_SECRET);
+    // send token as a cookie
+    ctx.response.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
+    });
     return { message: 'Password reset successfull' };
   },
 };
