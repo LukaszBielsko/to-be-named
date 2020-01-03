@@ -17,8 +17,8 @@ const SIGN_IN_MUTATION = gql`
 
 class SignIn extends Component {
   state = {
-    email: '',
-    password: '',
+    email: 'lucas.slough@gmail.com',
+    password: '1',
   };
 
   onChangeHandler = event => {

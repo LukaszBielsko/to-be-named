@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 import User from './User';
+import SingOut from './SignOut';
 
 const UserBar = styled.div`
   color: #000;
@@ -16,6 +17,8 @@ const UserBar = styled.div`
   text-align: right;
   background: linear-gradient(90deg, #000 30%, transparent 50%),
     linear-gradient(180deg, #000 0, #363738);
+  // check this out
+  //linear-gradient(1deg,#000 40%,transparent 50%),linear-gradient(180deg,#000 0,#363738)
   p {
     margin: 0;
     padding-right: 10px;
@@ -25,6 +28,7 @@ const UserBar = styled.div`
 
 const AboveHeader = props => (
   <UserBar>
+    <SingOut />
     <User>
       {({ data }) => {
         console.log(data);
