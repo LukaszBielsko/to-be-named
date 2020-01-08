@@ -103,6 +103,7 @@ const Mutation = {
   },
 
   requestPasswordReset: async (parent, { email }, ctx, info) => {
+    console.log('requestPasswordReset here, hello!');
     const user = await User.findOne({ email });
     if (!user) {
       throw new Error('User not found.');
@@ -114,6 +115,7 @@ const Mutation = {
     const tokenExpiry = Date.now() + 60 * 60 * 1000;
     user.resetToken = resetToken;
     user.tokenExpiry = tokenExpiry;
+    console.log({ user });
     user.save();
     return { message: 'Password reset request successfull' };
     /* TODO sent the password change email */
@@ -134,6 +136,8 @@ const Mutation = {
     }
 
     /* TODO work this out man, work it! */
+    /* TODO this is wrong, man! sth wrong with the time, as password will reset anyway9 */
+
     if (user.tokenExpiry > Date.now() + 60 * 60 * 1000) {
       throw new Error('Token expired');
     }

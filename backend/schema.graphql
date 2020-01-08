@@ -47,3 +47,7 @@ type User {
   resetToken: String
   resetTokenExpiry: Float
 }
+
+# TODO user resetToken and resetTokenExpiry
+# should not be available on the front end
+# this is security issue
