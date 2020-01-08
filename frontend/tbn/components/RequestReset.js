@@ -14,6 +14,7 @@ const REQUEST_RESET_MUTATION = gql`
 class RequestReset extends Component {
   state = {
     email: '',
+    message: '',
   };
 
   onChangeHandler = event => {
@@ -21,20 +22,27 @@ class RequestReset extends Component {
   };
 
   render() {
-    const { email } = this.state;
+    const { email, message } = this.state;
     return (
       <Mutation mutation={REQUEST_RESET_MUTATION} variables={this.state}>
-        {(reset, { called, loading }) => (
+        {(requestReset, { loading, called }) => (
           <Form
             method="post"
-            onSubmit={event => {
+            onSubmit={async event => {
               event.preventDefault();
-              reset();
-              this.setState({ email: '' });
+              await requestReset()
+                .then(payload => {
+                  this.setState({
+                    message: payload.data.requestPasswordReset.message,
+                  });
+                })
+                .catch(err => {
+                  if (err) this.setState({ message: err.message });
+                });
             }}
           >
             <h3>Password reset</h3>
-            {!loading && called && <p>Request succesfull</p>}
+            <p>{message}</p>
             <fieldset>
               <label htmlFor="email">
                 <input

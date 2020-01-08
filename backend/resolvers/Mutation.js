@@ -108,8 +108,6 @@ const Mutation = {
       throw new Error('User not found.');
     }
     const randomBytesPromise = promisify(randomBytes);
-    // do you see the clever thing below?
-    // (await functionToAwait).chainedFunction()
     const resetToken = (await randomBytesPromise(20)).toString('hex');
     const tokenExpiry = Date.now() + 60 * 60 * 1000;
     user.resetToken = resetToken;
@@ -117,7 +115,6 @@ const Mutation = {
     user.save();
     transporter.sendMail(
       {
-        from: 'sender@server.com',
         to: email,
         subject: 'Password reset',
         html: makeEmail(resetToken),
@@ -127,7 +124,6 @@ const Mutation = {
       }
     );
     return { message: 'Password reset request successfull' };
-    /* TODO sent the password change email */
   },
 
   resetPassword: async (

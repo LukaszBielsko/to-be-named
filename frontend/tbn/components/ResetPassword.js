@@ -44,7 +44,7 @@ class ResetPassword extends Component {
         variables={{ email, password, confirmPassword, resetToken }}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
-        {signUp => (
+        {reset => (
           <Form
             method="post"
             onSubmit={event => {
