@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import Router from 'next/router';
 
 import { CURRENT_USER_QUERY } from './User';
 import Form from './styles/form';
@@ -50,6 +51,9 @@ class ResetPassword extends Component {
               event.preventDefault();
               signUp();
               this.setState({ email: '', password: '', confirmPassword: '' });
+              Router.push({
+                pathname: '/arts',
+              });
             }}
           >
             <h3>Please enter your details</h3>
