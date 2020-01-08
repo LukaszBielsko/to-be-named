@@ -118,10 +118,9 @@ const Mutation = {
     transporter.sendMail(
       {
         from: 'sender@server.com',
-        to: 'lukeabove@gmail.com',
-        subject: 'Message title',
-        // text: 'Plaintext version of the message',
-        html: '<p>HTML version of the message</p>',
+        to: email,
+        subject: 'Password reset',
+        html: makeEmail(resetToken),
       },
       mailInfo => {
         console.log({ mailInfo });
