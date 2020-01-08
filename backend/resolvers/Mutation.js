@@ -141,7 +141,7 @@ const Mutation = {
     }
 
     /* TODO work this out man, work it! */
-    /* TODO this is wrong, man! sth wrong with the time, as password will reset anyway9 */
+    /* TODO this is wrong, man! sth wrong with the time, as password will reset anyway */
 
     if (user.tokenExpiry > Date.now() + 60 * 60 * 1000) {
       throw new Error('Token expired');
@@ -149,6 +149,7 @@ const Mutation = {
     if (password === confirmPassword) {
       const newPassword = await bcrypt.hash(password, 10);
       user.password = newPassword;
+      user.resetToken = '';
       user.save();
     } else {
       throw new Error("Passwords don't match");
