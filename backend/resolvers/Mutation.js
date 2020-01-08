@@ -1,5 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { randomBytes } = require('crypto');
+const { promisify } = require('util');
+
 const db = require('../mongo/schema');
 
 const { Item } = db;
@@ -93,10 +96,67 @@ const Mutation = {
     });
     return user;
   },
+
   signOut: (parent, args, ctx, info) => {
-    console.log('ctx from mutation', ctx);
     ctx.response.clearCookie('token');
     return { message: 'Goodbye!' };
+  },
+
+  requestPasswordReset: async (parent, { email }, ctx, info) => {
+    console.log('requestPasswordReset here, hello!');
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw new Error('User not found.');
+    }
+    const randomBytesPromise = promisify(randomBytes);
+    // do you see the clever thing below?
+    // (await functionToAwait).chainedFunction()
+    const resetToken = (await randomBytesPromise(20)).toString('hex');
+    const tokenExpiry = Date.now() + 60 * 60 * 1000;
+    user.resetToken = resetToken;
+    user.tokenExpiry = tokenExpiry;
+    console.log({ user });
+    user.save();
+    return { message: 'Password reset request successfull' };
+    /* TODO sent the password change email */
+  },
+
+  resetPassword: async (
+    parent,
+    { email, password, confirmPassword, resetToken },
+    ctx,
+    info
+  ) => {
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw new Error('User not found.');
+    }
+    if (user.resetToken !== resetToken) {
+      throw new Error('Wrong token!');
+    }
+
+    /* TODO work this out man, work it! */
+    /* TODO this is wrong, man! sth wrong with the time, as password will reset anyway9 */
+
+    if (user.tokenExpiry > Date.now() + 60 * 60 * 1000) {
+      throw new Error('Token expired');
+    }
+    if (password === confirmPassword) {
+      const newPassword = await bcrypt.hash(password, 10);
+      user.password = newPassword;
+      user.save();
+    } else {
+      throw new Error("Passwords don't match");
+    }
+    // create token
+    const token = jwt.sign({ userId: user._id }, process.env.APP_SECRET);
+    // send token as a cookie
+    ctx.response.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
+    });
+    console.log({ user });
+    return { message: 'Password reset successfull' };
   },
 };
 

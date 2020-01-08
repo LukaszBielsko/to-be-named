@@ -22,6 +22,8 @@ type Mutation {
   signUp(name: String!, email: String!, password: String!): User
   signIn(email: String!, password: String!): User
   signOut: SuccessMessage
+  requestPasswordReset(email: String!): SuccessMessage
+  resetPassword(email: String!, resetToken: String!, password: String!, confirmPassword: String!): SuccessMessage
 }
 
 type SuccessMessage {
@@ -45,3 +47,7 @@ type User {
   resetToken: String
   resetTokenExpiry: Float
 }
+
+# TODO user resetToken and resetTokenExpiry
+# should not be available on the front end
+# this is security issue

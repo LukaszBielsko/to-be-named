@@ -23,19 +23,23 @@ const UserBar = styled.div`
     margin: 0;
     padding-right: 10px;
     color: white;
+    display: inline;
   }
 `;
 
 const AboveHeader = props => (
   <UserBar>
-    <SingOut />
     <User>
       {({ data }) => {
-        console.log(data);
         if (data) {
           if (data.me) {
             /* TODO this will redirect to user panel */
-            return <p>Hello, {data.me.name}!</p>;
+            return (
+              <>
+                <p>Hello, {data.me.name}!</p>
+                <SingOut />
+              </>
+            );
           }
         }
         return (
