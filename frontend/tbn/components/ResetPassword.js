@@ -29,6 +29,7 @@ class ResetPassword extends Component {
     email: '',
     password: '',
     confirmPassword: '',
+    message: '',
   };
 
   onChangeHandler = event => {
@@ -36,7 +37,7 @@ class ResetPassword extends Component {
   };
 
   render() {
-    const { email, password, confirmPassword } = this.state;
+    const { email, password, confirmPassword, message } = this.state;
     const { resetToken } = this.props;
     return (
       <Mutation
@@ -47,16 +48,29 @@ class ResetPassword extends Component {
         {reset => (
           <Form
             method="post"
-            onSubmit={event => {
+            onSubmit={async event => {
               event.preventDefault();
-              signUp();
-              this.setState({ email: '', password: '', confirmPassword: '' });
-              Router.push({
-                pathname: '/arts',
-              });
+              await reset()
+                .then(() => {
+                  this.setState({
+                    email: '',
+                    password: '',
+                    confirmPassword: '',
+                    message: 'Password reset successfull',
+                  });
+                  setTimeout(() => {
+                    Router.push({
+                      pathname: '/arts',
+                    });
+                  }, 1000);
+                })
+                .catch(err => {
+                  this.setState({ message: err.message });
+                });
             }}
           >
             <h3>Please enter your details</h3>
+            <h5>{message}</h5>
             <fieldset>
               <label htmlFor="email">
                 <input
