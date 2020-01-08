@@ -4,6 +4,7 @@ const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 
 const db = require('../mongo/schema');
+const { transporter, makeEmail } = require('../mail');
 
 const { Item } = db;
 const { User } = db;
@@ -68,7 +69,6 @@ const Mutation = {
 
   signIn: async (parent, { email, password }, ctx, info) => {
     const user = await User.findOne({ email });
-    // console.log('user password', user.password);
     if (!user) {
       throw new Error('User not found.');
     }
@@ -103,7 +103,6 @@ const Mutation = {
   },
 
   requestPasswordReset: async (parent, { email }, ctx, info) => {
-    console.log('requestPasswordReset here, hello!');
     const user = await User.findOne({ email });
     if (!user) {
       throw new Error('User not found.');
@@ -115,8 +114,19 @@ const Mutation = {
     const tokenExpiry = Date.now() + 60 * 60 * 1000;
     user.resetToken = resetToken;
     user.tokenExpiry = tokenExpiry;
-    console.log({ user });
     user.save();
+    transporter.sendMail(
+      {
+        from: 'sender@server.com',
+        to: 'lukeabove@gmail.com',
+        subject: 'Message title',
+        // text: 'Plaintext version of the message',
+        html: '<p>HTML version of the message</p>',
+      },
+      mailInfo => {
+        console.log({ mailInfo });
+      }
+    );
     return { message: 'Password reset request successfull' };
     /* TODO sent the password change email */
   },
@@ -155,7 +165,6 @@ const Mutation = {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
     });
-    console.log({ user });
     return { message: 'Password reset successfull' };
   },
 };
