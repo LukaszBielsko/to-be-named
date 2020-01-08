@@ -31,7 +31,6 @@ const AboveHeader = props => (
   <UserBar>
     <User>
       {({ data }) => {
-        console.log(data);
         if (data) {
           if (data.me) {
             /* TODO this will redirect to user panel */
