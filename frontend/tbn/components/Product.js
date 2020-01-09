@@ -48,6 +48,8 @@ const ProductCard = styled.div`
       border: none;
       transition: all 0.4s ease 0s;
       align-self: center;
+      font-size: 30px;
+      font-family: 'Inconsolata', monospace;
       &:hover {
         color: red;
         font-size: 2.6rem;
