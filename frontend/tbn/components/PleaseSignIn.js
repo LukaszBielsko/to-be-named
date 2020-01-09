@@ -5,9 +5,18 @@ import { CURRENT_USER_QUERY } from './User';
 
 const PleaseSignIn = props => (
   <Query query={CURRENT_USER_QUERY}>
-    {({ data, error }) => {
+    {({ data, error, loading }) => {
       console.log(data);
-      return <p>Pls sign in :)</p>;
+      if (loading) return <p>loading</p>;
+      if (data.me) {
+        return props.children;
+      }
+      return (
+        <div>
+          <p>Pls sign in :)</p>
+          <SignIn />
+        </div>
+      );
     }}
   </Query>
 );
