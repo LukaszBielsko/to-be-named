@@ -2,6 +2,7 @@ type Query {
   items: [Item]
   item(id: String!): Item
   me: User
+  products: [Product]
 }
 
 type Mutation {
