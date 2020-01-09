@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import NProgress from 'nprogress';
 import Router from 'next/router';
-import User from './User';
+import Cart from './Cart';
 
 const nprogressStart = url => {
   NProgress.start();
@@ -125,6 +125,7 @@ const Header = props => {
           <input type="text" placeholder="search" />
         </div>
       </div>
+      <Cart />
     </Navbar>
   );
 };
