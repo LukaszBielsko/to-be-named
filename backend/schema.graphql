@@ -6,6 +6,11 @@ type Query {
 }
 
 type Mutation {
+  createProduct(
+    title: String!
+    price: Int!
+    description: String!
+  ) : Product
   createItem(
     title: String!
     place: String!
@@ -20,11 +25,24 @@ type Mutation {
     description: String
   ): Item!
   deleteItem(id: String!): Item!
-  signUp(name: String!, email: String!, password: String!): User
-  signIn(email: String!, password: String!): User
+  signUp(
+    name: String! 
+    email: String! 
+    password: String!
+    ): User
+  signIn(
+    email: String! 
+    password: String!
+    ): User
   signOut: SuccessMessage
   requestPasswordReset(email: String!): SuccessMessage
-  resetPassword(email: String!, resetToken: String!, password: String!, confirmPassword: String!): SuccessMessage
+  resetPassword(
+    email: String! 
+    resetToken: String! 
+    password: String!
+    confirmPassword: String!
+    ): 
+    SuccessMessage
 }
 
 type SuccessMessage {

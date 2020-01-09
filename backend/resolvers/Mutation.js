@@ -3,13 +3,19 @@ const jwt = require('jsonwebtoken');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 
-const db = require('../mongo/schema');
+const { Item, User, Product } = require('../mongo/schema');
 const { transporter, makeEmail } = require('../mail');
 
-const { Item } = db;
-const { User } = db;
-
 const Mutation = {
+  createProduct: async (parent, { title, price, description }) => {
+    const product = new Product({
+      title,
+      price,
+      description,
+    });
+    product.save();
+    return product;
+  },
   createItem: async (parent, args, ctx, info) => {
     const item = new Item({
       title: args.title,
