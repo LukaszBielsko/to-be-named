@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import Router from "next/router";
+import styled from 'styled-components';
+import Router from 'next/router';
 import Link from 'next/link';
 
-import DeleteItem from "../components/DeleteItem";
+import DeleteItem from './DeleteItem';
 
 const Card = styled.div`
   background: #fff;
@@ -51,7 +51,7 @@ const Card = styled.div`
     flex-direction: row;
     justify-content: space-evenly;
     margin-top: 20px;
-      button {
+    button {
       flex-grow: 0.3;
       padding: 3px;
     }
@@ -60,28 +60,32 @@ const Card = styled.div`
 
 const handleEdit = id => {
   Router.push({
-    pathname: "/update",
-    query: { id }
+    pathname: '/update',
+    query: { id },
   });
 };
 
-/*TODO putting everything inside one Link
+/* TODO putting everything inside one Link
   messes up the styling
   that's the reason why I had to use two
 */
 
 const Item = props => (
   <Card>
-    <Link href={{
-      pathname: 'item',
-      query: { id: props._id }
-    }}>
+    <Link
+      href={{
+        pathname: 'item',
+        query: { id: props._id },
+      }}
+    >
       <img className="image" src={props.largeImage} />
     </Link>
-    <Link href={{
-      pathname: 'item',
-      query: { id: props._id }
-    }}>
+    <Link
+      href={{
+        pathname: 'item',
+        query: { id: props._id },
+      }}
+    >
       <div className="item-header">
         <div className="item-place">{props.place}</div>
         <div className="item-title">{props.title}</div>
@@ -95,8 +99,5 @@ const Item = props => (
     </div>
   </Card>
 );
-
-
-
 
 export default Item;

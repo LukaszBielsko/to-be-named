@@ -18,7 +18,14 @@ const user = new Schema({
   tokenExpiry: String,
 });
 
+const product = new Schema({
+  title: String,
+  price: Number,
+  description: String,
+});
+
 module.exports = {
   Item: mongoose.model('pieceOfArt', pieceOfArt),
-  User: (exports.user = mongoose.model('user', user)),
+  User: mongoose.model('user', user),
+  Product: mongoose.model('product', product),
 };

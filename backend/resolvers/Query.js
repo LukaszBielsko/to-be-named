@@ -1,6 +1,4 @@
-const db = require('../mongo/schema');
-
-const { Item, User } = db;
+const { Item, User, Product } = require('../mongo/schema');
 
 const Query = {
   items: async () => {
@@ -15,6 +13,10 @@ const Query = {
     if (!context.request.userId) return null;
     const user = await User.findById(context.request.userId);
     return user;
+  },
+  products: async () => {
+    const products = await Product.find({});
+    return products;
   },
 };
 
