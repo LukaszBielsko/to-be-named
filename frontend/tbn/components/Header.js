@@ -110,13 +110,13 @@ const Header = props => {
         <Link href="/add">
           <a>add_art</a>
         </Link>
-        <Link href="/test2">
-          <a>user</a>
+        <Link href="/test1">
+          <a>test_1</a>
         </Link>
-        <Link href="/test2">
+        <Link href="/buy-art">
           <a>buy_art</a>
         </Link>
-        <Link href="/test2">
+        <Link href="/misc">
           <a>misc</a>
         </Link>
       </div>
