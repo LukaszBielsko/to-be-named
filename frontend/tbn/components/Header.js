@@ -114,7 +114,7 @@ const Header = props => {
           <a>test_1</a>
         </Link>
         <Link href="/buy-art">
-          <a>buy_art</a>
+          <a>buy-art</a>
         </Link>
         <Link href="/misc">
           <a>misc</a>

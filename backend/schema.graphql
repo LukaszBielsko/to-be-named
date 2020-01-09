@@ -71,6 +71,7 @@ type Product {
   title: String!
   price: Int!
   description: String!
+  _id: String
 }
 
 # TODO user resetToken and resetTokenExpiry

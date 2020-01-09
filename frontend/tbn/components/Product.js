@@ -34,6 +34,9 @@ const ProductCard = styled.div`
   .product-bottom {
     display: flex;
     justify-content: space-evenly;
+    .product-description {
+      font-style: italic;
+    }
     button {
       color: yellow;
       text-transform: uppercase;
@@ -57,14 +60,14 @@ const ProductCard = styled.div`
   }
 `;
 
-const Product = props => (
+const Product = ({ title, price, description }) => (
   <ProductCard>
     <div className="product-header">
-      <p className="product-title">Example title</p>
-      <p className="product-price">$12</p>
+      <p className="product-title">{title}</p>
+      <p className="product-price">$ {price}</p>
     </div>
     <div className="product-bottom">
-      <p className="product.description">description lalala</p>
+      <p className="product-description">{description}</p>
       <button>buy me</button>
     </div>
   </ProductCard>

@@ -1,6 +1,7 @@
 import React from 'react';
 import PleaseSignIn from '../components/PleaseSignIn';
 import Product from '../components/Product';
+import Shop from '../components/Shop';
 
 const test1 = props => (
   <>
@@ -8,6 +9,7 @@ const test1 = props => (
       <p>you are logged in, mate</p>
     </PleaseSignIn>
     <Product />
+    <Shop />
   </>
 );
 
