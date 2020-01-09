@@ -48,6 +48,12 @@ type User {
   resetTokenExpiry: Float
 }
 
+type Product {
+  title: String!
+  price: Int!
+  description: String!
+}
+
 # TODO user resetToken and resetTokenExpiry
 # should not be available on the front end
 # this is security issue
