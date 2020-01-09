@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const CartStyles = styled.div`
+  color: black;
   padding: 20px;
   position: relative;
   background: white;
@@ -41,6 +42,9 @@ const CartStyles = styled.div`
     padding: 0;
     list-style: none;
     overflow: scroll;
+  }
+  button {
+    font-size: 3rem;
   }
 `;
 
