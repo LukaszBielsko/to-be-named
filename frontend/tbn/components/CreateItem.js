@@ -1,8 +1,9 @@
-import React, { Component } from "react";
-import gql from "graphql-tag";
-import { Mutation } from "react-apollo";
-import styled, { keyframes } from "styled-components";
-import Router from "next/router";
+import React, { Component } from 'react';
+import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo';
+import styled, { keyframes } from 'styled-components';
+import Router from 'next/router';
+import PleaseSignIn from './PleaseSignIn';
 
 import Form from './styles/form';
 
@@ -15,6 +16,7 @@ import Form from './styles/form';
   assign variables to fields
   return what you need
 */
+
 const ADD_ITEM_MUTATION = gql`
   mutation add_item(
     $title: String!
@@ -39,61 +41,62 @@ const ADD_ITEM_MUTATION = gql`
 
 class Add extends Component {
   state = {
-    title: "",
-    description: "",
-    place: "",
-    image: "",
-    largeImage: ""
+    title: '',
+    description: '',
+    place: '',
+    image: '',
+    largeImage: '',
   };
 
   handleChange = evt => {
     this.setState({
-      [evt.target.name]: evt.target.value
+      [evt.target.name]: evt.target.value,
     });
   };
 
   /* TODO go thrugh this function again and again  */
 
   uploadFile = async evt => {
-    const files = evt.target.files;
+    const { files } = evt.target;
     const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "street-art");
+    data.append('file', files[0]);
+    data.append('upload_preset', 'street-art');
 
-    const res = await fetch("https://api.cloudinary.com/v1_1/lukwal/upload", {
-      method: "POST",
-      body: data
+    const res = await fetch('https://api.cloudinary.com/v1_1/lukwal/upload', {
+      method: 'POST',
+      body: data,
     });
 
     const file = await res.json();
     console.log(file);
     this.setState({
       image: file.secure_url,
-      largeImage: file.eager[0].secure_url
+      largeImage: file.eager[0].secure_url,
     });
   };
 
   render() {
+    const { title, place, description, image, largeImage } = this.state;
     return (
-      <>
+      <PleaseSignIn message="You need to be logged in to add an item.">
         <Mutation mutation={ADD_ITEM_MUTATION}>
-          {(add_item, { loading, error }) => (
+          {(addItem, { loading, error }) => (
             <Form
               onSubmit={async evt => {
                 evt.preventDefault();
-                const res = await add_item({
+                const res = await addItem({
                   variables: {
-                    title: this.state.title,
-                    place: this.state.place,
-                    description: this.state.description,
-                    image: this.state.image,
-                    largeImage: this.state.largeImage
-                  }
+                    title,
+                    place,
+                    description,
+                    image,
+                    largeImage,
+                  },
                 });
                 if (error) return <p>{error.message}</p>;
                 Router.push({
-                  pathname: "/item",
-                  query: { id: res.data.createItem._id }
+                  pathname: '/item',
+                  query: { id: res.data.createItem._id },
                 });
               }}
             >
@@ -106,7 +109,7 @@ class Add extends Component {
                     name="title"
                     placeholder="Title"
                     required
-                    value={this.state.title}
+                    value={title}
                     onChange={this.handleChange}
                   />
                 </label>
@@ -118,7 +121,7 @@ class Add extends Component {
                     name="description"
                     placeholder="Very short description please ;)"
                     // required
-                    value={this.state.description}
+                    value={description}
                     onChange={this.handleChange}
                   />
                 </label>
@@ -130,7 +133,7 @@ class Add extends Component {
                     name="place"
                     placeholder="Where did you find it?"
                     required
-                    value={this.state.place}
+                    value={place}
                     onChange={this.handleChange}
                   />
                 </label>
@@ -139,22 +142,21 @@ class Add extends Component {
                   <input name="file" type="file" onChange={this.uploadFile} />
                 </label>
 
-                {this.state.image && <img src={this.state.image} />}
+                {image && <img src={image} />}
 
                 <button type="submit">Submit</button>
               </fieldset>
             </Form>
           )}
         </Mutation>
-      </>
+      </PleaseSignIn>
     );
   }
 }
 
 export default Add;
 
-{
-  /* <label htmlFor="file">
+/* <label htmlFor="file">
     Image
                                 <input
         type="file"
@@ -166,4 +168,3 @@ export default Add;
         onChange={this.uploadFile}
     />
 </label> */
-}
