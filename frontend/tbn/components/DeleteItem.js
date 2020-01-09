@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
-import { GET_STREET_ARTS } from "./Items";
+import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import { GET_STREET_ARTS } from './Items';
 
 const DELETE_ITEM = gql`
   mutation DELETE_ITEM($id: String!) {
@@ -12,13 +12,13 @@ const DELETE_ITEM = gql`
 `;
 
 class DelteItem extends Component {
-  /* TODO not a to do but a reminder ;) how to update the cache */
-
+  /* TODO how to update the cache */
+  // BUG products will still be visible after deletion
   update = (cache, payload) => {
     // manually update the cache on the client that it matches the one on the server
     // read the cache for the items we want
     const data = cache.readQuery({
-      query: GET_STREET_ARTS
+      query: GET_STREET_ARTS,
     });
     // remove  item from cache
     data.items = data.items.filter(
@@ -35,27 +35,27 @@ class DelteItem extends Component {
     */
     cache.writeQuery({
       query: GET_STREET_ARTS,
-      data
+      data,
     });
   };
 
   render() {
+    const { id } = this.props;
     return (
       <Mutation mutation={DELETE_ITEM} update={this.update}>
-        {(deleteItem, { loading, error }) => {
-          return (
-            <button
-              onClick={() => {
-                if (confirm("R U sure you wanne delete this?")) {
-                  deleteItem({ variables: { id: this.props.id } });
-                }
-              }}
-            >
-              {" "}
-              {this.props.children}
-            </button>
-          );
-        }}
+        {(deleteItem, { loading, error }) => (
+          <button
+            type="button"
+            onClick={() => {
+              if (confirm('R U sure you wanne delete this?')) {
+                deleteItem({ variables: { id } });
+              }
+            }}
+          >
+            {' '}
+            {this.props.children}
+          </button>
+        )}
       </Mutation>
     );
   }
