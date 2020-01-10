@@ -1,4 +1,8 @@
 import styled from 'styled-components';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+
+import { CURRENT_USER_QUERY } from './User';
 
 const ProductCard = styled.div`
   padding: 20px;
@@ -62,7 +66,13 @@ const ProductCard = styled.div`
   }
 `;
 
-const Product = ({ title, price, description }) => (
+const ADD_TO_CART = gql`
+  mutation ADD_TO_CART($productId: String!) {
+    addProductToCart(productId: $productId)
+  }
+`;
+
+const Product = ({ title, price, description, _id }) => (
   <ProductCard>
     <div className="product-header">
       <p className="product-title">{title}</p>
@@ -70,7 +80,13 @@ const Product = ({ title, price, description }) => (
     </div>
     <div className="product-bottom">
       <p className="product-description">{description}</p>
-      <button>buy me</button>
+      <Mutation
+        mutation={ADD_TO_CART}
+        variables={{ productId: _id }}
+        refetchQueries={[{ query: CURRENT_USER_QUERY }]}
+      >
+        {addToCart => <button onClick={addToCart}>buy me</button>}
+      </Mutation>
     </div>
   </ProductCard>
 );
