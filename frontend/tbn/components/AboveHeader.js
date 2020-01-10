@@ -51,7 +51,8 @@ const AboveHeader = props => (
                 <Mutation mutation={TOGGLE_CART_MUTATION}>
                   {toggleCart => (
                     <button type="button" onClick={toggleCart}>
-                      Your Cart
+                      Cart: {data.me.cart.length} Item
+                      {data.me.cart.length > 1 ? 's' : ''}
                     </button>
                   )}
                 </Mutation>
