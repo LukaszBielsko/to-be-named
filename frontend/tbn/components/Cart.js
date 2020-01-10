@@ -4,6 +4,7 @@ import { Query, Mutation } from 'react-apollo';
 
 import CartStyles from './styles/cartStyles';
 import User from './User';
+import CartItem from './CartItem';
 
 const LOCAL_STATE_QUERY = gql`
   query {
@@ -32,12 +33,13 @@ const Cart = props => (
               {({ data, error, loading }) => (
                 <CartStyles open={data.cartOpen}>
                   <p>cart, man :)</p>
+                  {me.cart.map(product => {
+                    console.log(product._id);
+                    return <CartItem id={product._id} />;
+                  })}
                   <button type="button" onClick={toggleCart}>
                     &times;
                   </button>
-                  {me.cart.map(product => (
-                    <p>{product._id}</p>
-                  ))}
                 </CartStyles>
               )}
             </Query>

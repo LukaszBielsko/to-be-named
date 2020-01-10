@@ -1,6 +1,10 @@
 const { Item, User, Product } = require('../mongo/schema');
 
 const Query = {
+  cartItem: async (obj, args, context, info) => {
+    const cartItem = await Product.findById(args.id);
+    return cartItem;
+  },
   items: async () => {
     const items = await Item.find({});
     return items;
