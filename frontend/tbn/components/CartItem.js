@@ -14,6 +14,10 @@ const SINGLE_ITEM_QUERY = gql`
 
 const CartItem = styled.div`
   border-bottom: 1px double black;
+  display: flex;
+  p {
+    margin: 2px 10px;
+  }
 `;
 
 const CartListItem = props => {

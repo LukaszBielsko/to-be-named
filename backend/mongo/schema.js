@@ -10,6 +10,12 @@ const pieceOfArt = new Schema({
   largeImage: String,
 });
 
+const product = new Schema({
+  title: String,
+  price: Number,
+  description: String,
+});
+
 const user = new Schema({
   name: String,
   email: String,
@@ -17,12 +23,6 @@ const user = new Schema({
   resetToken: String,
   tokenExpiry: String,
   cart: [Schema.Types.ObjectId],
-});
-
-const product = new Schema({
-  title: String,
-  price: Number,
-  description: String,
 });
 
 module.exports = {

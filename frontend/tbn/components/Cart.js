@@ -1,6 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Query, Mutation } from 'react-apollo';
+import styled from 'styled-components';
 
 import CartStyles from './styles/cartStyles';
 import User from './User';
@@ -18,6 +19,12 @@ const TOGGLE_CART_MUTATION = gql`
   }
 `;
 
+const CloseButton = styled.button`
+  padding: 10px;
+  position: absolute;
+  right: 20px;
+`;
+
 const Cart = props => (
   <User>
     {user => {
@@ -32,14 +39,15 @@ const Cart = props => (
             <Query query={LOCAL_STATE_QUERY}>
               {({ data, error, loading }) => (
                 <CartStyles open={data.cartOpen}>
-                  <p>cart, man :)</p>
-                  {me.cart.map(product => {
-                    console.log(product._id);
-                    return <CartItem id={product._id} />;
-                  })}
-                  <button type="button" onClick={toggleCart}>
-                    &times;
-                  </button>
+                  <CloseButton onClick={toggleCart}>&times;</CloseButton>
+                  <p>
+                    You have {me.cart.length} item
+                    {me.cart.length > 1 ? 's' : null} in you cart.
+                  </p>
+                  {me.cart.map(product => (
+                    <CartItem id={product._id} />
+                  ))}
+                  <p>Total price:{}</p>
                 </CartStyles>
               )}
             </Query>
