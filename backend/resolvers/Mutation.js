@@ -16,6 +16,12 @@ const Mutation = {
     product.save();
     return product;
   },
+  addProductToCart: async (parent, args, ctx) => {
+    const user = await User.findById(ctx.request.userId);
+    await user.cart.push(args.productId);
+    user.save();
+    return 'hej dj!';
+  },
   createItem: async (parent, args, ctx, info) => {
     const item = new Item({
       title: args.title,

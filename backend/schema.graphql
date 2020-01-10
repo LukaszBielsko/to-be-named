@@ -11,6 +11,7 @@ type Mutation {
     price: Int!
     description: String!
   ) : Product
+  addProductToCart(productId: String!): String
   createItem(
     title: String!
     place: String!
@@ -66,6 +67,7 @@ type User {
   _id: String!
   resetToken: String
   resetTokenExpiry: Float
+  cart: [Product]
 }
 
 type Product {
