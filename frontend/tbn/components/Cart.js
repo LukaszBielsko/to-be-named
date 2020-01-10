@@ -1,7 +1,9 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Query, Mutation } from 'react-apollo';
+
 import CartStyles from './styles/cartStyles';
+import User from './User';
 
 const LOCAL_STATE_QUERY = gql`
   query {
@@ -16,22 +18,34 @@ const TOGGLE_CART_MUTATION = gql`
 `;
 
 const Cart = props => (
-  <Mutation mutation={TOGGLE_CART_MUTATION}>
-    {toggleCart => (
-      <Query query={LOCAL_STATE_QUERY}>
-        {({ data, error, loading }) =>
-          console.log('data', data) || (
-            <CartStyles open={data.cartOpen}>
-              <p>cart, man :)</p>
-              <button type="button" onClick={toggleCart}>
-                &times;
-              </button>
-            </CartStyles>
-          )
-        }
-      </Query>
-    )}
-  </Mutation>
+  <User>
+    {user => {
+      let me;
+      if (user.data) {
+        me = user.data.me;
+      }
+      if (!me) return null;
+      return (
+        <Mutation mutation={TOGGLE_CART_MUTATION}>
+          {toggleCart => (
+            <Query query={LOCAL_STATE_QUERY}>
+              {({ data, error, loading }) => (
+                <CartStyles open={data.cartOpen}>
+                  <p>cart, man :)</p>
+                  <button type="button" onClick={toggleCart}>
+                    &times;
+                  </button>
+                  {me.cart.map(product => (
+                    <p>{product._id}</p>
+                  ))}
+                </CartStyles>
+              )}
+            </Query>
+          )}
+        </Mutation>
+      );
+    }}
+  </User>
 );
 
 export default Cart;
