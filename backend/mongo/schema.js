@@ -16,6 +16,7 @@ const user = new Schema({
   password: String,
   resetToken: String,
   tokenExpiry: String,
+  cart: [Schema.Types.ObjectId],
 });
 
 const product = new Schema({
