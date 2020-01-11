@@ -12,7 +12,12 @@ type Mutation {
     price: Int!
     description: String!
   ) : Product
-  addProductToCart(productId: String!): Product
+  addProductToCart(
+    productId: String!
+  ): Product
+  removeFromCart(
+    id:String!
+    ): String
   createItem(
     title: String!
     place: String!

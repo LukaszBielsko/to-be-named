@@ -27,6 +27,16 @@ const Mutation = {
     return product;
   },
 
+  removeFromCart: async (parent, { id }, ctx) => {
+    const user = await User.findById(ctx.request.userId);
+    const updatedCart = user.cart.filter(
+      product => product._id.toString() !== id
+    );
+    user.cart = updatedCart;
+    user.save();
+    return id;
+  },
+
   createItem: async (parent, args, ctx, info) => {
     const item = new Item({
       title: args.title,
