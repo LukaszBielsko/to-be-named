@@ -49,7 +49,10 @@ const Cart = props => (
                   {me.cart.map(product => (
                     <CartItem id={product._id} />
                   ))}
-                  <p>Total price:{}</p>
+                  <p>
+                    Total price:
+                    {me.cart.reduce((prev, cur) => prev + cur.price, 0)}
+                  </p>
                 </CartStyles>
               )}
             </Query>
