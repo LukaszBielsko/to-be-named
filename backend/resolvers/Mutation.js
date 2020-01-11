@@ -19,10 +19,14 @@ const Mutation = {
 
   addProductToCart: async (parent, args, ctx) => {
     const user = await User.findById(ctx.request.userId);
-    await user.cart.push(args.productId);
+    // this is data duplication
+    // at the moment learing about relations is not my main concern
+    const product = await Product.findById(args.productId);
+    user.cart.push(product);
     user.save();
-    return 'hej dj!';
+    return product;
   },
+
   createItem: async (parent, args, ctx, info) => {
     const item = new Item({
       title: args.title,

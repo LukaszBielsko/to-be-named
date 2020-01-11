@@ -20,21 +20,18 @@ const CartItem = styled.div`
   }
 `;
 
-const CartListItem = props => {
-  console.log(props);
-  return (
-    <Query query={SINGLE_ITEM_QUERY} variables={{ id: props.id }}>
-      {({ data, err, loading }) => {
-        if (loading) return '...loading..';
-        return (
-          <CartItem>
-            <p>{data.cartItem.title}</p>
-            <p>{data.cartItem.price}</p>
-          </CartItem>
-        );
-      }}
-    </Query>
-  );
-};
+const CartListItem = props => (
+  <Query query={SINGLE_ITEM_QUERY} variables={{ id: props.id }}>
+    {({ data, err, loading }) => {
+      if (loading) return '...loading..';
+      return (
+        <CartItem>
+          <p>{data.cartItem.title}</p>
+          <p>{data.cartItem.price}</p>
+        </CartItem>
+      );
+    }}
+  </Query>
+);
 
 export default CartListItem;

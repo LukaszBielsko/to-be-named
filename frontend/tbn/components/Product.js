@@ -68,7 +68,9 @@ const ProductCard = styled.div`
 
 const ADD_TO_CART = gql`
   mutation ADD_TO_CART($productId: String!) {
-    addProductToCart(productId: $productId)
+    addProductToCart(productId: $productId) {
+      title
+    }
   }
 `;
 
@@ -82,7 +84,7 @@ const Product = ({ title, price, description, _id }) => (
       <p className="product-description">{description}</p>
       <Mutation
         mutation={ADD_TO_CART}
-        variables={{ productId: _id }}
+        variables={{ productId: _id, title, price, description }}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
         {addToCart => <button onClick={addToCart}>buy me</button>}

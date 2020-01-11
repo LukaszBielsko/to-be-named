@@ -22,7 +22,7 @@ const user = new Schema({
   password: String,
   resetToken: String,
   tokenExpiry: String,
-  cart: [Schema.Types.ObjectId],
+  cart: [product],
 });
 
 module.exports = {
