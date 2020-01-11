@@ -1,6 +1,7 @@
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
+import RemoveFromCart from './RemoveFromCart';
 
 const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: String!) {
@@ -20,14 +21,15 @@ const CartItem = styled.div`
   }
 `;
 
-const CartListItem = props => (
-  <Query query={SINGLE_ITEM_QUERY} variables={{ id: props.id }}>
+const CartListItem = ({ id }) => (
+  <Query query={SINGLE_ITEM_QUERY} variables={{ id }}>
     {({ data, err, loading }) => {
       if (loading) return '...loading..';
       return (
         <CartItem>
           <p>{data.cartItem.title}</p>
           <p>{data.cartItem.price}</p>
+          <RemoveFromCart id={id} />
         </CartItem>
       );
     }}

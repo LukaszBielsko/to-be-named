@@ -31,7 +31,6 @@ const Cart = props => (
       let me;
       if (user.data) {
         me = user.data.me;
-        console.log(me.cart);
         debugger;
       }
       if (!me) return null;
