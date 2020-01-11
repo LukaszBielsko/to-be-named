@@ -19,19 +19,12 @@ const TOGGLE_CART_MUTATION = gql`
   }
 `;
 
-const CloseButton = styled.button`
-  padding: 10px;
-  position: absolute;
-  right: 20px;
-`;
-
 const Cart = props => (
   <User>
     {user => {
       let me;
       if (user.data) {
         me = user.data.me;
-        debugger;
       }
       if (!me) return null;
       return (
@@ -40,7 +33,13 @@ const Cart = props => (
             <Query query={LOCAL_STATE_QUERY}>
               {({ data, error, loading }) => (
                 <CartStyles open={data.cartOpen}>
-                  <CloseButton onClick={toggleCart}>&times;</CloseButton>
+                  <button
+                    className="close-btn"
+                    type="button"
+                    onClick={toggleCart}
+                  >
+                    &times;
+                  </button>
                   <p>
                     You have {me.cart.length} item
                     {me.cart.length > 1 ? 's' : null} in you cart.

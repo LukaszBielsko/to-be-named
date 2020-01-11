@@ -17,14 +17,7 @@ const RemoveFromCart = ({ id }) => (
     refetchQueries={[{ query: CURRENT_USER_QUERY }]}
   >
     {removeFromCart => (
-      <button
-        type="button"
-        onClick={() => {
-          removeFromCart();
-          console.log('removed');
-          console.log(id);
-        }}
-      >
+      <button type="button" onClick={removeFromCart}>
         &times;
       </button>
     )}

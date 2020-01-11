@@ -30,6 +30,7 @@ const Mutation = {
   removeFromCart: async (parent, { id }, ctx) => {
     const user = await User.findById(ctx.request.userId);
     const updatedCart = user.cart.filter(
+      // this probably can and should be changed
       product => product._id.toString() !== id
     );
     user.cart = updatedCart;

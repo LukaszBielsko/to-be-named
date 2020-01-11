@@ -19,6 +19,9 @@ const CartItem = styled.div`
   p {
     margin: 2px 10px;
   }
+  button {
+    margin: 5px 20px 4px auto;
+  }
 `;
 
 const CartListItem = ({ id }) => (

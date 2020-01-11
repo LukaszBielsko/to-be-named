@@ -18,32 +18,12 @@ const CartStyles = styled.div`
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
   z-index: 5;
   ${props => props.open && `transform: translateX(0); opacity: 100%`};
-  header {
-    border-bottom: 5px solid ${props => props.theme.black};
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
   }
-  footer {
-    border-top: 10px double ${props => props.theme.black};
-    margin-top: 2rem;
-    padding-top: 2rem;
-    display: grid;
-    grid-template-columns: auto auto;
-    align-items: center;
+  .close-btn {
     font-size: 3rem;
-    font-weight: 900;
-    p {
-      margin: 0;
-    }
-  }
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    overflow: scroll;
-  }
-  button {
-    font-size: 3rem;
+     padding: 10px;
+  position: absolute;     
+  right: 20px;
   }
 `;
 
