@@ -2,6 +2,7 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { Query, Mutation } from 'react-apollo';
 import styled from 'styled-components';
+import { adopt } from 'react-adopt';
 
 import CartStyles from './styles/cartStyles';
 import User from './User';
@@ -19,46 +20,40 @@ const TOGGLE_CART_MUTATION = gql`
   }
 `;
 
+const Composed = adopt({
+  user: <User />,
+  toggleCart: <Mutation mutation={TOGGLE_CART_MUTATION} />,
+  localState: <Query query={LOCAL_STATE_QUERY}></Query>,
+});
+
 const Cart = props => (
-  <User>
-    {user => {
+  <Composed>
+    {({ user, toggleCart, localState }) => {
       let me;
       if (user.data) {
         me = user.data.me;
       }
       if (!me) return null;
       return (
-        <Mutation mutation={TOGGLE_CART_MUTATION}>
-          {toggleCart => (
-            <Query query={LOCAL_STATE_QUERY}>
-              {({ data, error, loading }) => (
-                <CartStyles open={data.cartOpen}>
-                  <button
-                    className="close-btn"
-                    type="button"
-                    onClick={toggleCart}
-                  >
-                    &times;
-                  </button>
-                  <p>
-                    You have {me.cart.length} item
-                    {me.cart.length > 1 ? 's' : null} in you cart.
-                  </p>
-                  {me.cart.map(product => (
-                    <CartItem id={product._id} />
-                  ))}
-                  <p>
-                    Total price:
-                    {me.cart.reduce((prev, cur) => prev + cur.price, 0)}
-                  </p>
-                </CartStyles>
-              )}
-            </Query>
-          )}
-        </Mutation>
+        <CartStyles open={localState.data.cartOpen}>
+          <button className="close-btn" type="button" onClick={toggleCart}>
+            &times;
+          </button>
+          <p>
+            You have {me.cart.length} item
+            {me.cart.length > 1 ? 's' : null} in you cart.
+          </p>
+          {me.cart.map(product => (
+            <CartItem id={product._id} />
+          ))}
+          <p>
+            Total price:
+            {me.cart.reduce((prev, cur) => prev + cur.price, 0)}
+          </p>
+        </CartStyles>
       );
     }}
-  </User>
+  </Composed>
 );
 
 export default Cart;
