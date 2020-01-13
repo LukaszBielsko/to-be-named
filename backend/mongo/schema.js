@@ -10,15 +10,23 @@ const pieceOfArt = new Schema({
   largeImage: String,
 });
 
+const product = new Schema({
+  title: String,
+  price: Number,
+  description: String,
+});
+
 const user = new Schema({
   name: String,
   email: String,
   password: String,
   resetToken: String,
   tokenExpiry: String,
+  cart: [product],
 });
 
 module.exports = {
   Item: mongoose.model('pieceOfArt', pieceOfArt),
-  User: (exports.user = mongoose.model('user', user)),
+  User: mongoose.model('user', user),
+  Product: mongoose.model('product', product),
 };

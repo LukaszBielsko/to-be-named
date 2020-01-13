@@ -19,7 +19,7 @@ const SignOut = props => (
   >
     {signOut => (
       <button type="button" onClick={signOut}>
-        sign out
+        SO
       </button>
     )}
   </Mutation>

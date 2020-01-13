@@ -3,13 +3,41 @@ const jwt = require('jsonwebtoken');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 
-const db = require('../mongo/schema');
+const { Item, User, Product } = require('../mongo/schema');
 const { transporter, makeEmail } = require('../mail');
 
-const { Item } = db;
-const { User } = db;
-
 const Mutation = {
+  createProduct: async (parent, { title, price, description }) => {
+    const product = new Product({
+      title,
+      price,
+      description,
+    });
+    product.save();
+    return product;
+  },
+
+  addProductToCart: async (parent, args, ctx) => {
+    const user = await User.findById(ctx.request.userId);
+    // this is data duplication
+    // at the moment learing about relations is not my main concern
+    const product = await Product.findById(args.productId);
+    user.cart.push(product);
+    user.save();
+    return product;
+  },
+
+  removeFromCart: async (parent, { id }, ctx) => {
+    const user = await User.findById(ctx.request.userId);
+    const updatedCart = user.cart.filter(
+      // this probably can and should be changed
+      product => product._id.toString() !== id
+    );
+    user.cart = updatedCart;
+    user.save();
+    return id;
+  },
+
   createItem: async (parent, args, ctx, info) => {
     const item = new Item({
       title: args.title,

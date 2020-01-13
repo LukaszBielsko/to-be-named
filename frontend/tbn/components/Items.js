@@ -1,9 +1,9 @@
-import react, { Component } from "react";
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
-import styled from "styled-components";
+import react, { Component } from 'react';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
+import styled from 'styled-components';
 
-import Item from "../components/Item";
+import Item from './Item';
 
 const GET_STREET_ARTS = gql`
   {
@@ -34,9 +34,9 @@ class Items extends Component {
             if (loading) return <p>"... loading ..."</p>;
             return (
               <>
-                {data.items.map(item => {
-                  return <Item {...item} key={item._id} />;
-                })}
+                {data.items.map(item => (
+                  <Item {...item} key={item._id} />
+                ))}
               </>
             );
           }}

@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
+import { Mutation } from 'react-apollo';
 
 import User from './User';
 import SingOut from './SignOut';
+import { TOGGLE_CART_MUTATION } from './Cart';
 
 const UserBar = styled.div`
   color: #000;
@@ -25,6 +27,15 @@ const UserBar = styled.div`
     color: white;
     display: inline;
   }
+  button {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    padding: 8px;
+    border: none;
+    font-size: 20px;
+    font-family: inherit;
+    cursor: pointer;
+  }
 `;
 
 const AboveHeader = props => (
@@ -37,6 +48,14 @@ const AboveHeader = props => (
             return (
               <>
                 <p>Hello, {data.me.name}!</p>
+                <Mutation mutation={TOGGLE_CART_MUTATION}>
+                  {toggleCart => (
+                    <button type="button" onClick={toggleCart}>
+                      Cart: {data.me.cart.length} Item
+                      {data.me.cart.length > 1 ? 's' : ''}
+                    </button>
+                  )}
+                </Mutation>
                 <SingOut />
               </>
             );
