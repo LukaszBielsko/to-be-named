@@ -21,6 +21,8 @@ const CartItem = styled.div`
   }
   button {
     margin: 5px 20px 4px auto;
+    border-radius: 40px;
+    background-color: rgb(295, 00, 00);
   }
 `;
 

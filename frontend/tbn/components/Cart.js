@@ -46,10 +46,13 @@ const Cart = props => (
           {me.cart.map(product => (
             <CartItem id={product._id} />
           ))}
-          <p>
+          <p className="total-price">
             Total price:
             {me.cart.reduce((prev, cur) => prev + cur.price, 0)}
           </p>
+          <button className="checkoutButton" type="button">
+            Checkout!
+          </button>
         </CartStyles>
       );
     }}
