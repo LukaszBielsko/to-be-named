@@ -8,6 +8,10 @@ import User from './User';
 import { calculateTotalPrice } from '../lib/utils';
 
 class TakeMyMoney extends Component {
+  onToken = res => {
+    console.log({ res });
+  };
+
   render() {
     const { children } = this.props;
     return (
@@ -20,7 +24,14 @@ class TakeMyMoney extends Component {
           }
           if (!me) return null;
           return (
-            <StripeCheckout amount={calculateTotalPrice(me.cart)}>
+            <StripeCheckout
+              amount={calculateTotalPrice(me.cart)}
+              name="Brushed Away"
+              stripeKey="pk_test_ih9kQkILxpb62yr0Ko5WBiMQ00BTOH4S4w"
+              currency="USD"
+              email={me.email}
+              token={res => this.onToken(res)}
+            >
               {children}
             </StripeCheckout>
           );
