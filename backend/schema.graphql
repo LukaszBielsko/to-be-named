@@ -74,6 +74,7 @@ type User {
   resetToken: String
   resetTokenExpiry: Float
   cart: [Product]
+  order: [Order]
 }
 
 type Product {
@@ -81,6 +82,11 @@ type Product {
   price: Int
   description: String
   _id: String
+}
+
+type Order {
+  products: [Product],
+  total: Int!
 }
 
 # TODO user resetToken and resetTokenExpiry

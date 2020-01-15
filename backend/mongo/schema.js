@@ -16,6 +16,11 @@ const product = new Schema({
   description: String,
 });
 
+const order = new Schema({
+  products: [product],
+  total: Number,
+});
+
 const user = new Schema({
   name: String,
   email: String,
@@ -23,6 +28,7 @@ const user = new Schema({
   resetToken: String,
   tokenExpiry: String,
   cart: [product],
+  orders: [order],
 });
 
 module.exports = {
