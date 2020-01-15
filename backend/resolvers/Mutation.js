@@ -5,6 +5,7 @@ const { promisify } = require('util');
 
 const { Item, User, Product } = require('../mongo/schema');
 const { transporter, makeEmail } = require('../mail');
+const stripe = require('../stripe');
 
 const Mutation = {
   createProduct: async (parent, { title, price, description }) => {
@@ -23,6 +24,7 @@ const Mutation = {
     // at the moment learing about relations is not my main concern
     const product = await Product.findById(args.productId);
     user.cart.push(product);
+    console.log(product);
     user.save();
     return product;
   },
@@ -191,9 +193,20 @@ const Mutation = {
     });
     return { message: 'Password reset successfull' };
   },
+
+  createOrder: async (parent, args, ctx, info) => {
+    const user = await User.findById(ctx.request.userId);
+    if (!user) {
+      throw new Error('User not found.');
+    }
+    const amount = user.cart.reduce((prev, cur) => prev + cur.price, 0);
+    const charge = await stripe.charges.create({
+      amount,
+      currency: 'USD',
+      source: args.token,
+    });
+    return amount;
+  },
 };
 
 module.exports = Mutation;
-
-// const res = await Character.remove({ name: 'Eddard Stark' });
-// res.deletedCount; // Number of documents removed

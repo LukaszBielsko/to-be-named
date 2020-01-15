@@ -7,6 +7,9 @@ type Query {
 }
 
 type Mutation {
+  createOrder(
+    token: String!
+  ): String!
   createProduct(
     title: String!
     price: Int!

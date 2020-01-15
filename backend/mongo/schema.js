@@ -35,4 +35,5 @@ module.exports = {
   Item: mongoose.model('pieceOfArt', pieceOfArt),
   User: mongoose.model('user', user),
   Product: mongoose.model('product', product),
+  Order: mongoose.model('order', order),
 };
