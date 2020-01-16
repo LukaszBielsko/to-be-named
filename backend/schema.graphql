@@ -9,7 +9,7 @@ type Query {
 type Mutation {
   createOrder(
     token: String!
-  ): String!
+  ): Order
   createProduct(
     title: String!
     price: Int!
@@ -90,6 +90,7 @@ type Product {
 type Order {
   products: [Product],
   total: Int!
+  _id: String!
 }
 
 # TODO user resetToken and resetTokenExpiry

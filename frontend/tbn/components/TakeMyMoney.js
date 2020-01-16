@@ -10,14 +10,25 @@ import { calculateTotalPrice } from '../lib/utils';
 
 const CREATE_ORDER_MUTATION = gql`
   mutation CREATE_ORDER_MUTATION($token: String!) {
-    createOrder(token: $token)
+    createOrder(token: $token) {
+      total
+      _id
+    }
   }
 `;
 
 class TakeMyMoney extends Component {
-  onToken = (res, createOrder) => {
-    console.log({ res });
-    createOrder({ variables: { token: res.id } });
+  onToken = async (res, createOrder) => {
+    NProgress.start();
+    const order = await createOrder({
+      variables: { token: res.id },
+      refetchQueries: [{ query: CURRENT_USER_QUERY }],
+    }).catch(err => alert(err.message));
+    Router.push({
+      pathname: '/order',
+      query: { id: order.data.createOrder._id },
+    });
+    NProgress.done();
   };
 
   render() {
