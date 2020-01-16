@@ -5,7 +5,7 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 import gql from 'graphql-tag';
 
-import User from './User';
+import User, { CURRENT_USER_QUERY } from './User';
 import { calculateTotalPrice } from '../lib/utils';
 
 const CREATE_ORDER_MUTATION = gql`
@@ -32,7 +32,10 @@ class TakeMyMoney extends Component {
           }
           if (!me) return null;
           return (
-            <Mutation mutation={CREATE_ORDER_MUTATION}>
+            <Mutation
+              mutation={CREATE_ORDER_MUTATION}
+              refetchQueries={[{ query: CURRENT_USER_QUERY }]}
+            >
               {createOrder => (
                 <StripeCheckout
                   amount={calculateTotalPrice(me.cart)}

@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 
-const { Item, User, Product } = require('../mongo/schema');
+const { Item, User, Product, Order } = require('../mongo/schema');
 const { transporter, makeEmail } = require('../mail');
 const stripe = require('../stripe');
 
@@ -24,7 +24,6 @@ const Mutation = {
     // at the moment learing about relations is not my main concern
     const product = await Product.findById(args.productId);
     user.cart.push(product);
-    console.log(product);
     user.save();
     return product;
   },
@@ -205,7 +204,14 @@ const Mutation = {
       currency: 'USD',
       source: args.token,
     });
-    return amount;
+    const order = new Order({
+      products: [...user.cart],
+      total: amount,
+    });
+    user.orders.push(order);
+    user.cart = [];
+    user.save();
+    return order;
   },
 };
 
