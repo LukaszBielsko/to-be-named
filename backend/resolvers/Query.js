@@ -28,6 +28,13 @@ const Query = {
     const order = await user.orders.id(id);
     return order;
   },
+  allOrders: async (obj, args, context, info) => {
+    // if (!context.request.userId) return null;
+    // const user = await User.findById(context.request.userId);
+    const user = await User.findById('5e1835fd1ef8621ccd64ae70');
+    const orders = await user.orders;
+    return orders;
+  },
 };
 
 module.exports = Query;

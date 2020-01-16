@@ -5,6 +5,7 @@ type Query {
   products: [Product]
   cartItem(id: String!): Product
   order(id: String!): Order
+  allOrders: [Order]
 }
 
 type Mutation {
