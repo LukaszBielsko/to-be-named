@@ -24,7 +24,7 @@ const Query = {
   },
   order: async (obj, { id }, context, info) => {
     if (!context.request.userId) return null;
-    const user = await User.findById(id);
+    const user = await User.findById(context.request.userId);
     const order = await user.orders.id(id);
     return order;
   },
