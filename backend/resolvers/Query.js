@@ -1,4 +1,4 @@
-const { Item, User, Product, Order } = require('../mongo/schema');
+const { Item, User, Product } = require('../mongo/schema');
 
 const Query = {
   cartItem: async (obj, args, context, info) => {
