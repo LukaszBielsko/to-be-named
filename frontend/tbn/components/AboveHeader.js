@@ -27,8 +27,10 @@ const UserBar = styled.div`
     color: white;
     display: inline;
   }
-  button {
+  button,
+  a {
     background-color: rgba(0, 0, 0, 0.3);
+    text-decoration: none;
     color: white;
     padding: 8px;
     border: none;
@@ -50,10 +52,15 @@ const AboveHeader = props => (
                 <p>Hello, {data.me.name}!</p>
                 <Mutation mutation={TOGGLE_CART_MUTATION}>
                   {toggleCart => (
-                    <button type="button" onClick={toggleCart}>
-                      Cart: {data.me.cart.length} Item
-                      {data.me.cart.length > 1 ? 's' : ''}
-                    </button>
+                    <>
+                      <button type="button" onClick={toggleCart}>
+                        Cart: {data.me.cart.length} Item
+                        {data.me.cart.length > 1 ? 's' : ''}
+                      </button>
+                      <Link href="/orders">
+                        <a>Orders</a>
+                      </Link>
+                    </>
                   )}
                 </Mutation>
                 <SingOut />
