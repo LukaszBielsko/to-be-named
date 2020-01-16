@@ -7,6 +7,8 @@ import { adopt } from 'react-adopt';
 import CartStyles from './styles/cartStyles';
 import User from './User';
 import CartItem from './CartItem';
+import TakeMyMoney from './TakeMyMoney';
+import { calculateTotalPrice, formatMoney } from '../lib/utils';
 
 const LOCAL_STATE_QUERY = gql`
   query {
@@ -29,6 +31,7 @@ const Composed = adopt({
 const Cart = props => (
   <Composed>
     {({ user, toggleCart, localState }) => {
+      /* TODO this is so wrong, fix */
       let me;
       if (user.data) {
         me = user.data.me;
@@ -46,10 +49,14 @@ const Cart = props => (
           {me.cart.map(product => (
             <CartItem id={product._id} />
           ))}
-          <p>
-            Total price:
-            {me.cart.reduce((prev, cur) => prev + cur.price, 0)}
+          <p className="total-price">
+            Total price: {formatMoney(calculateTotalPrice(me.cart))}
           </p>
+          <TakeMyMoney>
+            <button className="checkoutButton" type="button">
+              Checkout!
+            </button>
+          </TakeMyMoney>
         </CartStyles>
       );
     }}

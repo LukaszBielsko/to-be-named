@@ -19,11 +19,32 @@ const CartStyles = styled.div`
   z-index: 5;
   ${props => props.open && `transform: translateX(0); opacity: 100%`};
   }
+  .total-price {
+    font-family: 'Inconsolata', monospace;
+    line-height: 1.5;
+    color: black;
+    box-sizing: inherit;
+    font-weight: bold;
+    font-size: 2.9rem;
+    display: inline-block;
+    margin-top: 25px;
+    margin-right: 50px;
+ 
+  }
   .close-btn {
     font-size: 3rem;
-     padding: 10px;
-  position: absolute;     
-  right: 20px;
+    position: absolute;
+    right: 35px;
+    border-radius: 61%;
+    background-color: lightgray;
+  }
+  .checkoutButton {
+   background: rgb(28, 184, 65); /* this is a green */
+   font-size: 2.9rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+    font-family: monospace;
+    border-radius: 20px;
   }
 `;
 

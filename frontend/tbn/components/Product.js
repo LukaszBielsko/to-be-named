@@ -3,6 +3,7 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import { CURRENT_USER_QUERY } from './User';
+import { formatMoney } from '../lib/utils';
 
 const ProductCard = styled.div`
   padding: 20px;
@@ -78,7 +79,7 @@ const Product = ({ title, price, description, _id }) => (
   <ProductCard>
     <div className="product-header">
       <p className="product-title">{title}</p>
-      <p className="product-price">$ {price}</p>
+      <p className="product-price">$ {formatMoney(price)}</p>
     </div>
     <div className="product-bottom">
       <p className="product-description">{description}</p>

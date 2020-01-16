@@ -3,8 +3,9 @@ const jwt = require('jsonwebtoken');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 
-const { Item, User, Product } = require('../mongo/schema');
+const { Item, User, Product, Order } = require('../mongo/schema');
 const { transporter, makeEmail } = require('../mail');
+const stripe = require('../stripe');
 
 const Mutation = {
   createProduct: async (parent, { title, price, description }) => {
@@ -191,9 +192,27 @@ const Mutation = {
     });
     return { message: 'Password reset successfull' };
   },
+
+  createOrder: async (parent, args, ctx, info) => {
+    const user = await User.findById(ctx.request.userId);
+    if (!user) {
+      throw new Error('User not found.');
+    }
+    const amount = user.cart.reduce((prev, cur) => prev + cur.price, 0);
+    const charge = await stripe.charges.create({
+      amount,
+      currency: 'USD',
+      source: args.token,
+    });
+    const order = new Order({
+      products: [...user.cart],
+      total: amount,
+    });
+    user.orders.push(order);
+    user.cart = [];
+    user.save();
+    return order;
+  },
 };
 
 module.exports = Mutation;
-
-// const res = await Character.remove({ name: 'Eddard Stark' });
-// res.deletedCount; // Number of documents removed

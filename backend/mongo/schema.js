@@ -16,6 +16,11 @@ const product = new Schema({
   description: String,
 });
 
+const order = new Schema({
+  products: [product],
+  total: Number,
+});
+
 const user = new Schema({
   name: String,
   email: String,
@@ -23,10 +28,12 @@ const user = new Schema({
   resetToken: String,
   tokenExpiry: String,
   cart: [product],
+  orders: [order],
 });
 
 module.exports = {
   Item: mongoose.model('pieceOfArt', pieceOfArt),
   User: mongoose.model('user', user),
   Product: mongoose.model('product', product),
+  Order: mongoose.model('order', order),
 };
