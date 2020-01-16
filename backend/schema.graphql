@@ -4,6 +4,7 @@ type Query {
   me: User
   products: [Product]
   cartItem(id: String!): Product
+  order(id: String!, userid: String!): Order
 }
 
 type Mutation {

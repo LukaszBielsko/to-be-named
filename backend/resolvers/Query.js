@@ -1,4 +1,4 @@
-const { Item, User, Product } = require('../mongo/schema');
+const { Item, User, Product, Order } = require('../mongo/schema');
 
 const Query = {
   cartItem: async (obj, args, context, info) => {
@@ -21,6 +21,12 @@ const Query = {
   products: async () => {
     const products = await Product.find({});
     return products;
+  },
+  order: async (obj, { id }, context, info) => {
+    if (!context.request.userId) return null;
+    const user = await User.findById(id);
+    const order = await user.orders.id(id);
+    return order;
   },
 };
 
