@@ -3,7 +3,7 @@
 
   - React
   - Next.js
-  - Node.js 
+  - Node.js
   - GraphQl
   - GraphQl Yoga
   - Mongoose
@@ -21,5 +21,5 @@
 - adding/deleting/updating random pieces of art
 - sing up, log in/out, reset password
 - buy products, checkout products, charge for the products
-- display previous orders (to do)
+- display single order and previous ones
 ----
