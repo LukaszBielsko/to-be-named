@@ -30,6 +30,9 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2"
   },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/setupTests.js"
+  },
   "babel": {
     "env": {
       "development": {
