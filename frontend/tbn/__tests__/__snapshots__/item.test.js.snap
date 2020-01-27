@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Item /> renders and matches the snapshot 1`] = `
+<Item__Card>
+  <Link
+    href={
+      Object {
+        "pathname": "item",
+        "query": Object {
+          "id": "abc",
+        },
+      }
+    }
+  >
+    <img
+      className="image"
+      src="large.jpg"
+    />
+  </Link>
+  <Link
+    href={
+      Object {
+        "pathname": "item",
+        "query": Object {
+          "id": "abc",
+        },
+      }
+    }
+  >
+    <div
+      className="item-header"
+    >
+      <div
+        className="item-place"
+      >
+        china
+      </div>
+      <div
+        className="item-title"
+      >
+        product
+      </div>
+      <div
+        className="item-description"
+      >
+        great product
+      </div>
+    </div>
+  </Link>
+  <div
+    className="item-buttons"
+  >
+    <button
+      onClick={[Function]}
+    >
+      Edit
+    </button>
+    <DelteItem
+      id="abc"
+    >
+       Delete this item 
+    </DelteItem>
+    <button>
+       Button
+    </button>
+  </div>
+</Item__Card>
+`;
